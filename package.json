@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "My swell Nuxt.js project",
   "author": "Eduardo Barros",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -11,12 +12,18 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
+    "@firebase/app": "^0.5.2",
+    "@firebase/auth": "^0.13.4",
+    "@firebase/firestore": "^1.9.3",
     "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "@nuxtjs/dotenv": "^1.4.0"
+    "nuxt": "^2.0.0",
+    "vuefire": "^2.2.1",
+    "vuexfire": "^3.2.1"
   },
   "devDependencies": {
+    "@mdi/js": "^4.7.95",
     "@nuxtjs/vuetify": "^1.0.0"
   }
 }
