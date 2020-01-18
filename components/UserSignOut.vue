@@ -1,11 +1,11 @@
 <template>
-  <div v-if="user">
+  <v-container v-if="user">
     <div class="my-3">
       <v-btn @click="signOut" block color="red">
         Sair
       </v-btn>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

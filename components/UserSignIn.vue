@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!user">
+  <v-container v-if="!user">
     <div class="my-3">
       <v-btn
         class="btn--google"
@@ -52,7 +52,7 @@
         </template>
       </v-btn>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

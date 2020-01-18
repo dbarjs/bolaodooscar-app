@@ -1,23 +1,26 @@
 <template>
-  <v-list v-if="user">
-    <v-list-item>
-      <v-list-item-avatar>
-        <v-img v-bind:src="user.photoURL"></v-img>
-      </v-list-item-avatar>
-    </v-list-item>
+  <div>
+    <v-list v-if="user">
+      <v-list-item>
+        <v-list-item-avatar>
+          <v-img v-bind:src="user.photoURL"></v-img>
+        </v-list-item-avatar>
+      </v-list-item>
 
-    <v-list-item link two-line>
-      <v-list-item-content>
-        <v-list-item-title class="title">
-          {{ user.displayName }}
-        </v-list-item-title>
-        <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
-      </v-list-item-content>
-      <v-list-item-action>
-        <v-icon>mdi-menu-down</v-icon>
-      </v-list-item-action>
-    </v-list-item>
-  </v-list>
+      <v-list-item link two-line>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            {{ user.displayName }}
+          </v-list-item-title>
+          <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+        </v-list-item-content>
+        <v-list-item-action>
+          <v-icon>mdi-menu-down</v-icon>
+        </v-list-item-action>
+      </v-list-item>
+    </v-list>
+    <v-divider></v-divider>
+  </div>
 </template>
 
 <script>

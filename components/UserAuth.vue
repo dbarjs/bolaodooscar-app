@@ -1,9 +1,7 @@
 <template>
   <div>
     <user-info></user-info>
-    <v-divider></v-divider>
     <user-sign-in></user-sign-in>
-    <v-divider></v-divider>
     <user-sign-out></user-sign-out>
   </div>
 </template>
