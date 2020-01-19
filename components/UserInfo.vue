@@ -20,15 +20,29 @@
       </v-list-item>
     </v-list>
     <v-divider></v-divider>
+    <v-list nav dense>
+      <v-list-item link>
+        <v-list-item-icon>
+          <v-icon>{{ mdiAccount }}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Conta</v-list-item-title>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
 <script>
+import { mdiAccount } from "@mdi/js";
 export default {
   computed: {
     user() {
       return this.$store.state.user;
     }
+  },
+  data() {
+    return {
+      mdiAccount
+    };
   }
 };
 </script>
