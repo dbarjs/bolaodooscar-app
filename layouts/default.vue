@@ -14,15 +14,15 @@
       >
         <v-btn dark>
           <span>Início</span>
-          <v-icon>{{ mdiHomeOutline }}</v-icon>
+          <v-icon>{{ mdiHome }}</v-icon>
         </v-btn>
         <v-btn dark>
           <span>text</span>
           <v-icon>{{ mdiMovie }}</v-icon>
         </v-btn>
         <v-btn dark>
-          <span>text</span>
-          <v-icon>{{ mdiMovie }}</v-icon>
+          <span>Apostas</span>
+          <v-icon>{{ mdiCheckboxMultipleMarked }}</v-icon>
         </v-btn>
         <v-btn dark @click="drawer = !drawer">
           <span>Mais</span>
@@ -35,14 +35,15 @@
 
 <script>
 import UserAuth from "~/components/UserAuth.vue";
-import { mdiHomeOutline, mdiMovie, mdiMenu } from "@mdi/js";
+import { mdiHome, mdiMovie, mdiMenu, mdiCheckboxMultipleMarked } from "@mdi/js";
 export default {
   data() {
     return {
-      drawer: true,
-      mdiHomeOutline,
+      drawer: false,
+      mdiHome,
       mdiMovie,
-      mdiMenu
+      mdiMenu,
+      mdiCheckboxMultipleMarked
     };
   },
   components: {

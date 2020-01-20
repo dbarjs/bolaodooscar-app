@@ -1,0 +1,34 @@
+<template>
+  <div class="category-list" v-if="categories">
+    <category-list-item
+      v-for="category in categories"
+      v-bind:id="category.id"
+      v-bind:name="category.name"
+      :key="category.id"
+    ></category-list-item>
+  </div>
+</template>
+
+<script>
+import { categoriesRef } from "~/firebase";
+import CategoryListItem from "~/components/CategoryListItem.vue";
+export default {
+  data() {
+    return {
+      categories: []
+    };
+  },
+  firestore: {
+    categories: categoriesRef.orderBy("order", "asc")
+  },
+  components: {
+    CategoryListItem
+  }
+};
+</script>
+
+<style>
+.category-list {
+  margin: 1rem 0;
+}
+</style>

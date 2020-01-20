@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-list v-if="user">
+  <div v-if="user">
+    <v-list>
       <v-list-item>
         <v-list-item-avatar>
           <v-img v-bind:src="user.photoURL"></v-img>
@@ -27,12 +27,19 @@
         </v-list-item-icon>
         <v-list-item-title>Conta</v-list-item-title>
       </v-list-item>
+      <v-list-item link @click="signOut">
+        <v-list-item-icon>
+          <v-icon>{{ mdiLogout }}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Sair</v-list-item-title>
+      </v-list-item>
     </v-list>
   </div>
 </template>
 
 <script>
-import { mdiAccount } from "@mdi/js";
+import { mdiAccount, mdiLogout } from "@mdi/js";
+import { auth } from "~/firebase";
 export default {
   computed: {
     user() {
@@ -41,8 +48,21 @@ export default {
   },
   data() {
     return {
-      mdiAccount
+      mdiAccount,
+      mdiLogout
     };
+  },
+  methods: {
+    signOut() {
+      auth
+        .signOut()
+        .then(function() {
+          console.warn("Signed Out!");
+        })
+        .catch(function(error) {
+          console.warn("Sign Out Error" + error);
+        });
+    }
   }
 };
 </script>

@@ -2,7 +2,6 @@
   <div>
     <user-info></user-info>
     <user-sign-in></user-sign-in>
-    <user-sign-out></user-sign-out>
   </div>
 </template>
 
@@ -10,7 +9,6 @@
 import { auth } from "~/firebase";
 import UserInfo from "~/components/UserInfo.vue";
 import UserSignIn from "~/components/UserSignIn.vue";
-import UserSignOut from "~/components/UserSignOut.vue";
 export default {
   methods: {
     onAuthStateChanged(user) {
@@ -28,8 +26,7 @@ export default {
   },
   components: {
     UserInfo,
-    UserSignIn,
-    UserSignOut
+    UserSignIn
   }
 };
 </script>
