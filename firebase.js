@@ -17,3 +17,4 @@ export const authProviders = {
 export const database = firebase.firestore();
 export const categoriesRef = database.collection("categories");
 export const moviesRef = database.collection("movies");
+export const votesRef = database.collection("votes");

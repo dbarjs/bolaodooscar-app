@@ -13,13 +13,10 @@
 import { categoriesRef } from "~/firebase";
 import CategoryListItem from "~/components/CategoryListItem.vue";
 export default {
-  data() {
-    return {
-      categories: []
-    };
-  },
-  firestore: {
-    categories: categoriesRef.orderBy("order", "asc")
+  computed: {
+    categories() {
+      return this.$store.getters["categories/getCategoryList"];
+    }
   },
   components: {
     CategoryListItem

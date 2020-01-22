@@ -12,12 +12,12 @@
         active.sync="value"
         color="primary"
       >
-        <v-btn dark>
+        <v-btn to="/" dark>
           <span>Início</span>
           <v-icon>{{ mdiHome }}</v-icon>
         </v-btn>
-        <v-btn dark>
-          <span>text</span>
+        <v-btn to="/movies" dark>
+          <span>Filmes</span>
           <v-icon>{{ mdiMovie }}</v-icon>
         </v-btn>
         <v-btn dark>

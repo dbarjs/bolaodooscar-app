@@ -1,6 +1,9 @@
 <template>
   <div class="category-list-item">
-    <h3 class="category-list-item-name title">{{ name }}</h3>
+    <h3 class="category-list-item-name title">
+      <span>{{ name }}</span>
+      <span v-if="currentVote">({{ currentVote.nomineeName }})</span>
+    </h3>
     <nominee-list v-bind:category-id="id"></nominee-list>
   </div>
 </template>
@@ -9,14 +12,19 @@
 import { categoriesRef } from "~/firebase";
 import NomineeList from "~/components/NomineeList.vue";
 export default {
+  components: {
+    NomineeList
+  },
+  computed: {
+    currentVote() {
+      return this.id ? this.$store.state.currentVote[this.id] : false;
+    }
+  },
   props: {
     id: {
       required: true
     },
     name: String
-  },
-  components: {
-    NomineeList
   }
 };
 </script>

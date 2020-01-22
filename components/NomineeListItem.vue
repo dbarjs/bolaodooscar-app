@@ -1,12 +1,9 @@
 <template>
   <div v-if="nominee" class="nominee-list-item">
-    <div class="nominee-list-item-poster elevation-10">
-      <v-img
-        class="nominee-list-item-image"
-        v-bind:src="nominee.movie.poster"
-      />
+    <div class="nominee-list-item-poster elevation-10" @click="vote">
+      <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
     </div>
-    <div class="nominee-list-item-meta">
+    <div class="nominee-list-item-meta" @click="vote">
       <span class="nominee-list-item-title subtitle-2">
         <span>{{ nominee.name }}</span>
       </span>
@@ -15,12 +12,31 @@
 </template>
 
 <script>
-import { categoriesRef } from "~/firebase";
+import { categoriesRef, votesRef } from "~/firebase";
 export default {
+  computed: {
+    currentVote() {
+      return this.$store.state.currentVote;
+    },
+    getNomineePoster() {
+      return this.nominee.poster
+        ? this.nominee.poster
+        : this.nominee.movie.poster;
+    }
+  },
   data() {
     return {
       nominee: null
     };
+  },
+  methods: {
+    vote() {
+      this.$store.commit("setCategoryVote", {
+        nomineeId: this.id,
+        nomineeName: this.nominee.name,
+        categoryId: this.categoryId
+      });
+    }
   },
   props: ["id", "categoryId"],
   watch: {
