@@ -19,3 +19,7 @@ export const categoriesRef = database.collection("categories");
 export const moviesRef = database.collection("movies");
 export const usersRef = database.collection("users");
 export const votesRef = database.collection("votes");
+
+// Timestamp
+const { Timestamp, GeoPoint } = firebase.firestore;
+export { Timestamp, GeoPoint };

@@ -1,7 +1,7 @@
 <template>
   <v-app-bar transition="slide-y-transition" fixed v-model="isVoting">
     <v-btn icon>
-      <v-icon>{{ mdiArrowLeft }}</v-icon>
+      <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
     </v-btn>
     <v-toolbar-title>
       {{ numberOfVotes }} / {{ numberOfCategories }} votos
@@ -12,17 +12,17 @@
 </template>
 
 <script>
-import { votesRef } from "~/firebase";
+import { votesRef, usersRef, Timestamp } from "~/firebase";
 import { mdiArrowLeft } from "@mdi/js";
 export default {
   data() {
     return {
-      mdiArrowLeft
+      icons: { mdiArrowLeft }
     };
   },
   computed: {
     user() {
-      return this.$store.state.user;
+      return this.$store.getters["user/getUser"];
     },
     isVoting() {
       return !!Object.keys(this.$store.state.currentVote).length;
@@ -39,6 +39,7 @@ export default {
       if (this.user) {
         votesRef.add({
           userId: this.user.uid,
+          timestamp: Timestamp.now(),
           votes: this.$store.state.currentVote
         });
       }
