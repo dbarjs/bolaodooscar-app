@@ -3,16 +3,18 @@
     <v-list>
       <v-list-item>
         <v-list-item-avatar>
-          <v-img v-bind:src="user.photoURL"></v-img>
+          <v-img v-bind:src="user.providerData.photoURL"></v-img>
         </v-list-item-avatar>
       </v-list-item>
 
       <v-list-item link two-line>
         <v-list-item-content>
           <v-list-item-title class="title">
-            {{ user.displayName }}
+            {{ user.providerData.displayName }}
           </v-list-item-title>
-          <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{
+            user.providerData.email
+          }}</v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
           <v-icon>mdi-menu-down</v-icon>
@@ -43,7 +45,7 @@ import { auth } from "~/firebase";
 export default {
   computed: {
     user() {
-      return this.$store.state.user;
+      return this.$store.getters["user/getUser"];
     }
   },
   data() {

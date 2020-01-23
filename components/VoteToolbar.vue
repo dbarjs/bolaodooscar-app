@@ -21,6 +21,9 @@ export default {
     };
   },
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
     isVoting() {
       return !!Object.keys(this.$store.state.currentVote).length;
     },
@@ -33,8 +36,12 @@ export default {
   },
   methods: {
     confirmVote() {
-      console.log(this.$store.state.currentVote);
-      votesRef.add(this.$store.state.currentVote);
+      if (this.user) {
+        votesRef.add({
+          userId: this.user.uid,
+          votes: this.$store.state.currentVote
+        });
+      }
     }
   }
 };

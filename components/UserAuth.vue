@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { auth } from "~/firebase";
+import { auth, usersRef } from "~/firebase";
 import UserInfo from "~/components/UserInfo.vue";
 import UserSignIn from "~/components/UserSignIn.vue";
 export default {
@@ -14,10 +14,17 @@ export default {
     onAuthStateChanged(user) {
       if (user) {
         if (user.providerData[0]) {
-          this.$store.commit("setUser", user.providerData[0]);
+          // set "user" data on Firestore
+          usersRef.doc(user.uid).set({
+            uid: user.uid,
+            providerData: user.providerData[0]
+          });
+          // bind user data (Vuex)
+          this.$store.dispatch("user/bindUserRef", user.uid);
         }
       } else {
-        this.$store.commit("setUser", false);
+        // unbind user data (Vuex) and set to null
+        this.$store.dispatch("user/unbindUserRef");
       }
     }
   },

@@ -16,11 +16,11 @@
           <span>Início</span>
           <v-icon>{{ mdiHome }}</v-icon>
         </v-btn>
-        <v-btn to="/movies" dark>
+        <v-btn to="/" dark>
           <span>Filmes</span>
           <v-icon>{{ mdiMovie }}</v-icon>
         </v-btn>
-        <v-btn dark>
+        <v-btn to="/votes" dark>
           <span>Apostas</span>
           <v-icon>{{ mdiCheckboxMultipleMarked }}</v-icon>
         </v-btn>

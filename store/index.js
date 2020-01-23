@@ -2,7 +2,6 @@ import Vue from "vue";
 import { vuexfireMutations, firestoreAction } from "vuexfire";
 
 export const state = () => ({
-  user: false,
   currentVote: {}
 });
 
@@ -20,9 +19,6 @@ export const mutations = {
       // set the category vote
       Vue.set(state.currentVote, vote.categoryId, vote);
     }
-  },
-  setUser(state, user) {
-    state.user = user ? user : false;
   }
 };
 

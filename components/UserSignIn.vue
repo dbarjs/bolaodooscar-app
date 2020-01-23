@@ -26,7 +26,7 @@
         block
         color="#3b5999"
       >
-        <v-icon left>{{ mdiFacebookBox }}</v-icon>
+        <v-icon left>{{ icons.mdiFacebookBox }}</v-icon>
         Log In Com Facebook
         <template v-slot:loading.facebook>
           <span class="custom-loader">
@@ -43,7 +43,7 @@
         block
         color="#55acee"
       >
-        <v-icon left>{{ mdiTwitter }}</v-icon>
+        <v-icon left>{{ icons.mdiTwitter }}</v-icon>
         Log In Com Twitter
         <template v-slot:loading.twitter>
           <span class="custom-loader">
@@ -61,14 +61,16 @@ import { mdiFacebookBox, mdiGoogle, mdiTwitter } from "@mdi/js";
 export default {
   computed: {
     user() {
-      return this.$store.state.user;
+      return this.$store.getters["user/getUser"];
     }
   },
   data() {
     return {
-      mdiFacebookBox,
-      mdiGoogle,
-      mdiTwitter,
+      icons: {
+        mdiFacebookBox,
+        mdiGoogle,
+        mdiTwitter
+      },
       loading: {
         google: false,
         facebook: false,
