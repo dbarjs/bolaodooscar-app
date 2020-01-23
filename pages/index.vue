@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <vote-toolbar></vote-toolbar>
+  <div class="pt-12">
     <header class="py-6">
       <v-container class="d-flex flex-column align-center">
         <v-img class="logo" src="bdo-logo.png" max-width="300"></v-img>
       </v-container>
     </header>
     <category-list></category-list>
+    <vote-toolbar></vote-toolbar>
   </div>
 </template>
 

@@ -2,7 +2,8 @@ import Vue from "vue";
 import { vuexfireMutations, firestoreAction } from "vuexfire";
 
 export const state = () => ({
-  currentVote: {}
+  currentVote: {},
+  showUserMenu: false
 });
 
 export const mutations = {
@@ -19,6 +20,9 @@ export const mutations = {
       // set the category vote
       Vue.set(state.currentVote, vote.categoryId, vote);
     }
+  },
+  toggleUserMenu(state) {
+    state.showUserMenu = !state.showUserMenu;
   }
 };
 

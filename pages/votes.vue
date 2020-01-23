@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-12">
     <h1>Lista de Apostas</h1>
     <vote-list></vote-list>
   </div>

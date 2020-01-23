@@ -4,6 +4,7 @@
       v-for="category in categories"
       v-bind:id="category.id"
       v-bind:name="category.name"
+      v-bind:shortName="category.shortName"
       :key="category.id"
     ></category-list-item>
   </div>

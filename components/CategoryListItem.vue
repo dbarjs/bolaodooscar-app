@@ -1,7 +1,7 @@
 <template>
   <div class="category-list-item">
     <h3 class="category-list-item-name title">
-      <span>{{ name }}</span>
+      <span>{{ shortName }}</span>
       <span v-if="currentVote">({{ currentVote.nomineeName }})</span>
     </h3>
     <nominee-list v-bind:category-id="id"></nominee-list>
@@ -24,7 +24,8 @@ export default {
     id: {
       required: true
     },
-    name: String
+    name: String,
+    shortName: String
   }
 };
 </script>
