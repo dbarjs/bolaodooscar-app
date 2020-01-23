@@ -89,7 +89,7 @@ export default {
     },
     signInWithTwitter() {
       this.loading.twitter = true;
-      // auth.signInWithRedirect(authProviders.facebook);
+      auth.signInWithRedirect(authProviders.twitter);
     }
   }
 };
