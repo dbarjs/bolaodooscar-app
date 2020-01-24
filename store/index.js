@@ -21,6 +21,9 @@ export const mutations = {
       Vue.set(state.currentVote, vote.categoryId, vote);
     }
   },
+  clearCurrentVote(state) {
+    state.currentVote = {};
+  },
   toggleUserMenu(state) {
     state.showUserMenu = !state.showUserMenu;
   }

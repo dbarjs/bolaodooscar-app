@@ -1,9 +1,20 @@
 <template>
-  <span v-if="votes">{{ votes }}</span>
+  <v-container v-if="votes">
+    <v-row>
+      <vote-list-item
+        cols="12"
+        v-for="vote in votes"
+        :key="vote.id"
+        :vote="vote"
+      >
+      </vote-list-item>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import { votesRef } from "~/firebase";
+import VoteListItem from "~/components/VoteListItem.vue";
 export default {
   data() {
     return {
@@ -13,6 +24,11 @@ export default {
   computed: {
     user() {
       return this.$store.getters["user/getUser"];
+    },
+    orderedChoices() {
+      const orderedChoices = this.choices;
+      console.log(orderedChoices);
+      return this.votes;
     }
   },
   watch: {
@@ -24,6 +40,9 @@ export default {
         }
       }
     }
+  },
+  components: {
+    VoteListItem
   }
 };
 </script>

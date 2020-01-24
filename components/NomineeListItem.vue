@@ -31,14 +31,16 @@ export default {
   },
   methods: {
     vote() {
+      console.log(this.category);
       this.$store.commit("setCategoryVote", {
         nomineeId: this.id,
         nomineeName: this.nominee.name,
-        categoryId: this.categoryId
+        categoryId: this.categoryId,
+        category: this.category
       });
     }
   },
-  props: ["id", "categoryId"],
+  props: ["id", "categoryId", "categoryName", "categoryShortName"],
   watch: {
     id: {
       immediate: true,
@@ -50,6 +52,7 @@ export default {
             .collection("nominees")
             .doc(this.id)
         );
+        this.$bind("category", categoriesRef.doc(this.categoryId));
       }
     }
   }

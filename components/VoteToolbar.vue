@@ -39,9 +39,11 @@ export default {
       if (this.user) {
         votesRef.add({
           userId: this.user.uid,
+          user: usersRef.doc(this.user.uid),
           timestamp: Timestamp.now(),
-          votes: this.$store.state.currentVote
+          choices: this.$store.state.currentVote
         });
+        this.$store.commit("clearCurrentVote");
       }
     }
   }
