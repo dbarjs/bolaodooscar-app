@@ -2,7 +2,7 @@
   <div class="category-list-item">
     <h3 class="category-list-item-name title">
       <span>{{ shortName }}</span>
-      <span v-if="currentVote">({{ currentVote.nomineeName }})</span>
+      <span v-if="currentChoices">({{ currentChoices.nomineeName }})</span>
     </h3>
     <nominee-list v-bind:category-id="id"></nominee-list>
   </div>
@@ -16,8 +16,8 @@ export default {
     NomineeList
   },
   computed: {
-    currentVote() {
-      return this.id ? this.$store.state.currentVote[this.id] : false;
+    currentChoices() {
+      return this.id ? this.$store.state.currentChoices[this.id] : false;
     }
   },
   props: {

@@ -2,27 +2,27 @@ import Vue from "vue";
 import { vuexfireMutations, firestoreAction } from "vuexfire";
 
 export const state = () => ({
-  currentVote: {},
+  currentChoices: {},
   showUserMenu: false
 });
 
 export const mutations = {
   ...vuexfireMutations,
   setCategoryVote(state, vote) {
-    // Conditional to test if the Category has a vote
+    // Conditional to test if the Category has a choice
     if (
-      JSON.stringify(state.currentVote[vote.categoryId]) ===
+      JSON.stringify(state.currentChoices[vote.categoryId]) ===
       JSON.stringify(vote)
     ) {
-      // remove the category vote
-      Vue.delete(state.currentVote, vote.categoryId);
+      // remove the category choice
+      Vue.delete(state.currentChoices, vote.categoryId);
     } else {
-      // set the category vote
-      Vue.set(state.currentVote, vote.categoryId, vote);
+      // set the category choice
+      Vue.set(state.currentChoices, vote.categoryId, vote);
     }
   },
-  clearCurrentVote(state) {
-    state.currentVote = {};
+  clearCurrentChoices(state) {
+    state.currentChoices = {};
   },
   toggleUserMenu(state) {
     state.showUserMenu = !state.showUserMenu;
@@ -30,7 +30,7 @@ export const mutations = {
 };
 
 export const actions = {
-  bindCurrentVote: firestoreAction(({ bindFirestoreRef }) => {
-    return bindFirestoreRef("currentVote", false);
+  bindCurrentChoices: firestoreAction(({ bindFirestoreRef }) => {
+    return bindFirestoreRef("currentChoices", false);
   })
 };

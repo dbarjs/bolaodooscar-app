@@ -31,12 +31,11 @@ export default {
   },
   methods: {
     vote() {
-      console.log(this.category);
       this.$store.commit("setCategoryVote", {
         nomineeId: this.id,
         nomineeName: this.nominee.name,
         categoryId: this.categoryId,
-        category: this.category
+        movieId: this.nominee.movieId
       });
     }
   },

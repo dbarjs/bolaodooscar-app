@@ -2,12 +2,10 @@
   <v-container v-if="votes">
     <v-row>
       <vote-list-item
-        cols="12"
         v-for="vote in votes"
         :key="vote.id"
         :vote="vote"
-      >
-      </vote-list-item>
+      ></vote-list-item>
     </v-row>
   </v-container>
 </template>
