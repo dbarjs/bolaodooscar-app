@@ -3,6 +3,9 @@
     <div class="nominee-list-item-poster elevation-10" @click="vote">
       <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
     </div>
+    <div class="nominee-list-item-action">
+      <v-btn dense x-small block color="secondary" @click="vote">Votar</v-btn>
+    </div>
     <div class="nominee-list-item-meta" @click="vote">
       <span class="nominee-list-item-title subtitle-2">
         <span>{{ nominee.name }}</span>
@@ -84,6 +87,10 @@ export default {
   width: 90px;
   height: 133px;
   object-fit: cover;
+}
+
+.nominee-list-item-action {
+  margin-bottom: 0.375em;
 }
 
 .nominee-list-item-meta {

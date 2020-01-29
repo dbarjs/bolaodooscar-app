@@ -2,9 +2,7 @@
   <div class="category-list" v-if="categories">
     <category-list-item
       v-for="category in categories"
-      v-bind:id="category.id"
-      v-bind:name="category.name"
-      v-bind:shortName="category.shortName"
+      v-bind:category="category"
       :key="category.id"
     ></category-list-item>
   </div>

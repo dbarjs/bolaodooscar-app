@@ -1,10 +1,11 @@
 <template>
-  <div class="nominee-list">
+  <div class="nominee-list" v-if="categoryId">
+    <selected-nominee :categoryId="categoryId"></selected-nominee>
     <nominee-list-item
       v-for="nominee in nominees"
       :key="nominee.id"
-      v-bind:id="nominee.id"
-      v-bind:categoryId="categoryId"
+      :id="nominee.id"
+      :categoryId="categoryId"
     ></nominee-list-item>
   </div>
 </template>
@@ -12,13 +13,18 @@
 <script>
 import { categoriesRef } from "~/firebase";
 import NomineeListItem from "~/components/NomineeListItem.vue";
+import SelectedNominee from "~/components/SelectedNominee.vue";
 export default {
   data() {
     return {
       nominees: []
     };
   },
-  props: ["categoryId"],
+  props: {
+    categoryId: {
+      required: true
+    }
+  },
   watch: {
     categoryId: {
       immediate: true,
@@ -34,7 +40,8 @@ export default {
     }
   },
   components: {
-    NomineeListItem
+    NomineeListItem,
+    SelectedNominee
   }
 };
 </script>

@@ -2,7 +2,6 @@
   <v-list v-if="choices">
     <v-list-item v-for="choice in orderedChoices" :key="choice.categoryId">
       <v-list-item-content>
-        {{ choice.category }}
         <v-list-item-title>{{ choice.nomineeName }}</v-list-item-title>
         <v-list-item-subtitle>{{ choice.category.name }}</v-list-item-subtitle>
       </v-list-item-content>

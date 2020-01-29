@@ -1,10 +1,9 @@
 <template>
   <div class="category-list-item">
     <h3 class="category-list-item-name title">
-      <span>{{ shortName }}</span>
-      <span v-if="currentChoices">({{ currentChoices.nomineeName }})</span>
+      <span>{{ category.name }}</span>
     </h3>
-    <nominee-list v-bind:category-id="id"></nominee-list>
+    <nominee-list v-bind:categoryId="category.id"></nominee-list>
   </div>
 </template>
 
@@ -15,17 +14,11 @@ export default {
   components: {
     NomineeList
   },
-  computed: {
-    currentChoices() {
-      return this.id ? this.$store.state.currentChoices[this.id] : false;
-    }
-  },
   props: {
-    id: {
-      required: true
-    },
-    name: String,
-    shortName: String
+    category: {
+      required: true,
+      type: Object
+    }
   }
 };
 </script>
