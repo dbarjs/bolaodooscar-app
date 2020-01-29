@@ -1,9 +1,9 @@
 <template>
   <v-app-bar transition="slide-y-transition" fixed v-model="isVoting">
     <v-btn icon @click="clearChoices">
-      <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
+      <v-icon>{{ icons.mdiClose }}</v-icon>
     </v-btn>
-    <v-toolbar-title>
+    <v-toolbar-title class="">
       {{ numberOfVotes }} / {{ numberOfCategories }} votos
     </v-toolbar-title>
     <v-spacer></v-spacer>
@@ -19,11 +19,11 @@ import {
   moviesRef,
   Timestamp
 } from "~/firebase";
-import { mdiArrowLeft } from "@mdi/js";
+import { mdiClose } from "@mdi/js";
 export default {
   data() {
     return {
-      icons: { mdiArrowLeft }
+      icons: { mdiClose }
     };
   },
   computed: {

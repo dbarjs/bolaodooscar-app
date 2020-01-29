@@ -4,7 +4,7 @@
       <vote-list-item
         v-for="vote in votes"
         :key="vote.id"
-        :vote="vote"
+        :voteId="vote.id"
       ></vote-list-item>
     </v-row>
   </v-container>
@@ -45,5 +45,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

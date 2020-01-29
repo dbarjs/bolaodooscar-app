@@ -18,6 +18,8 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "auto-parse": "^1.8.0",
+    "luxon": "^1.22.0",
     "nuxt": "^2.0.0",
     "vuefire": "^2.2.1",
     "vuexfire": "^3.2.1"
