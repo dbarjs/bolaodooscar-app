@@ -1,7 +1,14 @@
 <template>
-  <div v-if="nominee">
-    <div class="nominee-list-item-poster elevation-10">
-      <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
+  <div class="selected-nominee" v-if="selectedNominee">
+    <div class="selected-nominee-content d-flex" v-if="nominee">
+      <div class="selected-nominee-poster elevation-10">
+        <v-img class="selected-nominee-image" v-bind:src="getNomineePoster" />
+      </div>
+      <div class="selected-nominee-meta">
+        <span class="selected-nominee-title subtitle-2">
+          <span>{{ nominee.name }}</span>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -56,4 +63,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.selected-nominee {
+  min-width: 240px;
+}
+
+.selected-nominee-image {
+  width: 136px;
+  height: 200px;
+  object-fit: cover;
+}
+</style>

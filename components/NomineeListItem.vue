@@ -1,12 +1,22 @@
 <template>
   <div v-if="nominee" class="nominee-list-item">
-    <div class="nominee-list-item-poster elevation-10" @click="vote">
+    <div class="nominee-list-item-poster elevation-10">
       <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
     </div>
     <div class="nominee-list-item-action">
-      <v-btn dense x-small block color="secondary" @click="vote">Votar</v-btn>
+      <v-btn
+        :disabled="isSelected"
+        dense
+        x-small
+        block
+        color="secondary"
+        @click="vote"
+      >
+        <span v-if="!isSelected">Votar</span>
+        <span v-else>Selecionado</span>
+      </v-btn>
     </div>
-    <div class="nominee-list-item-meta" @click="vote">
+    <div class="nominee-list-item-meta">
       <span class="nominee-list-item-title subtitle-2">
         <span>{{ nominee.name }}</span>
       </span>
@@ -18,6 +28,9 @@
 import { categoriesRef, votesRef } from "~/firebase";
 export default {
   computed: {
+    isSelected() {
+      return this.selectedNominee === this.nominee.id;
+    },
     currentVote() {
       return this.$store.state.currentVote;
     },
@@ -42,7 +55,7 @@ export default {
       });
     }
   },
-  props: ["id", "categoryId", "categoryName", "categoryShortName"],
+  props: ["id", "categoryId", "selectedNominee"],
   watch: {
     id: {
       immediate: true,

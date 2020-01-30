@@ -1,11 +1,12 @@
 <template>
   <div class="nominee-list" v-if="categoryId">
-    <selected-nominee :categoryId="categoryId"></selected-nominee>
+    <!-- <selected-nominee :categoryId="categoryId"></selected-nominee> -->
     <nominee-list-item
       v-for="nominee in nominees"
       :key="nominee.id"
       :id="nominee.id"
       :categoryId="categoryId"
+      :selectedNominee="selectedNominee"
     ></nominee-list-item>
   </div>
 </template>
@@ -19,6 +20,15 @@ export default {
     return {
       nominees: []
     };
+  },
+  computed: {
+    selectedNominee() {
+      return (this.categoryId
+      ? this.$store.state.currentChoices[this.categoryId]
+      : false)
+        ? this.$store.state.currentChoices[this.categoryId].nomineeId
+        : false;
+    }
   },
   props: {
     categoryId: {
