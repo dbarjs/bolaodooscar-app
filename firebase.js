@@ -3,6 +3,7 @@ import firebase from "@firebase/app";
 import "@firebase/firestore";
 import "@firebase/auth";
 
+// Firebase App
 export default firebase.initializeApp(firebaseConfig);
 
 // Auth
