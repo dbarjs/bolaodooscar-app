@@ -15,13 +15,13 @@ export default {
   computed: {
     categories() {
       return this.$store.getters["categories/getCategoryList"];
-    },
-    currentVote() {
-      return this.$store.state.vote.currentVote;
     }
   },
   components: {
     CategoryListItem
+  },
+  created() {
+    this.$store.dispatch("categories/bindCategoriesRef");
   }
 };
 </script>

@@ -6,6 +6,7 @@
     <div class="nominee-list-item-action">
       <v-btn
         :disabled="isSelected"
+        :loading="loading && !isSelected"
         dense
         x-small
         block
@@ -42,17 +43,23 @@ export default {
   },
   data() {
     return {
-      nominee: null
+      nominee: null,
+      loading: false
     };
   },
   methods: {
     vote() {
+      this.loading = true;
       this.$store.dispatch("vote/addChoice", {
         nomineeId: this.id,
         nomineeName: this.nominee.name,
         categoryId: this.categoryId,
         movieId: this.nominee.movieId
       });
+      setTimeout(() => {
+        this.loading = false;
+        console.log(this.loading);
+      }, 3000);
     }
   },
   props: ["id", "categoryId", "selectedNominee"],

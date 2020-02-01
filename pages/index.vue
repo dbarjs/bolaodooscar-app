@@ -1,27 +1,41 @@
 <template>
   <div class="pt-12">
-    <header class="py-6">
+    <header class="">
       <v-container class="d-flex flex-column align-center">
         <v-img class="logo" src="bdo-logo.png" max-width="300"></v-img>
+        <v-btn color="my-6 success" to="/vote">Faça sua Aposta!</v-btn>
       </v-container>
     </header>
-    <category-list></category-list>
-    <vote-toolbar></vote-toolbar>
   </div>
 </template>
 
 <script>
-import CategoryList from "~/components/CategoryList.vue";
-import VoteToolbar from "~/components/VoteToolbar.vue";
-
 export default {
-  components: {
-    CategoryList,
-    VoteToolbar
-  },
-  created() {
-    this.$store.dispatch("categories/bindCategoriesRef");
-  },
-  methods: {}
+  transition: "page"
 };
 </script>
+
+<style scoped>
+.page-enter-active {
+  animation: acrossIn 0.2s ease-in both;
+}
+.page-leave-active {
+  animation: acrossOut 0.2s ease-in both;
+}
+@keyframes acrossIn {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+@keyframes acrossOut {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+</style>

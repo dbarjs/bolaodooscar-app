@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     selectedNominee() {
-      return (this.categoryId
+      return (this.categoryId && this.$store.state.vote.currentVote
       ? this.$store.state.vote.currentVote.choices[this.categoryId]
       : false)
         ? this.$store.state.vote.currentVote.choices[this.categoryId].nomineeId

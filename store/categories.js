@@ -11,6 +11,8 @@ export const getters = {
 
 export const actions = {
   bindCategoriesRef: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef("categories", categoriesRef.orderBy("order", "asc"));
+    bindFirestoreRef("categories", categoriesRef.orderBy("order", "asc"), {
+      wait: true
+    });
   })
 };

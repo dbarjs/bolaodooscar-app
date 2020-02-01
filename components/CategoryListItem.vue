@@ -1,10 +1,12 @@
 <template>
-  <div class="category-list-item">
-    <h3 class="category-list-item-name title">
-      <span>{{ category.name }}</span>
-    </h3>
-    <nominee-list v-bind:categoryId="category.id"></nominee-list>
-  </div>
+  <v-lazy min-height="290px">
+    <div class="category-list-item">
+      <h3 class="category-list-item-name title">
+        <span>{{ category.name }}</span>
+      </h3>
+      <nominee-list v-bind:categoryId="category.id"></nominee-list>
+    </div>
+  </v-lazy>
 </template>
 
 <script>

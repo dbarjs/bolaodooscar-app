@@ -82,6 +82,10 @@ export default {
   },
   components: {
     UserAuth
+  },
+  created() {
+    this.$store.dispatch("movies/bindMoviesRef");
+    this.$store.dispatch("categories/bindCategoriesRef");
   }
 };
 </script>

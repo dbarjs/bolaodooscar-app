@@ -31,11 +31,13 @@ export const actions = {
   }),
   async createVote(context) {
     try {
+      // get active user (if exists):
       const user = context.rootGetters["user/getUser"];
+      // return the ref current vote:
       return votesRef.add({
         user: user ? usersRef.doc(user.id) : false,
         userId: user ? user.id : false,
-        timestamp: Timestamp.now(),
+        created: Timestamp.now(),
         choices: {}
       });
     } catch (e) {
@@ -52,6 +54,7 @@ export const actions = {
     };
     // verify if exists a active vote
     if (context.state.currentVote) {
+      // put the choice on vote:
       votesRef.doc(context.state.currentVote.id).update({
         ["choices." + newChoice.categoryId]: newChoice
       });
