@@ -28,6 +28,6 @@ export default {
 
 <style>
 .category-list {
-  margin: 1rem 0;
+  margin: 4.5rem 0 1rem;
 }
 </style>

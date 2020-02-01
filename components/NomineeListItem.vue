@@ -58,7 +58,6 @@ export default {
       });
       setTimeout(() => {
         this.loading = false;
-        console.log(this.loading);
       }, 3000);
     }
   },
