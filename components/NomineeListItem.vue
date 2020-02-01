@@ -6,7 +6,7 @@
     <div class="nominee-list-item-action">
       <v-btn
         :disabled="isSelected"
-        :loading="loading && !isSelected"
+        :loading="isLoading && !isSelected"
         dense
         x-small
         block
@@ -30,7 +30,7 @@ import { categoriesRef, votesRef } from "~/firebase";
 export default {
   computed: {
     isSelected() {
-      return this.selectedNominee === this.nominee.id;
+      return this.nominee ? this.selectedNominee === this.nominee.id : false;
     },
     currentVote() {
       return this.$store.state.currentVote;
@@ -44,12 +44,12 @@ export default {
   data() {
     return {
       nominee: null,
-      loading: false
+      isLoading: false
     };
   },
   methods: {
     vote() {
-      this.loading = true;
+      this.isLoading = true;
       this.$store.dispatch("vote/addChoice", {
         nomineeId: this.id,
         nomineeName: this.nominee.name,
@@ -57,7 +57,7 @@ export default {
         movieId: this.nominee.movieId
       });
       setTimeout(() => {
-        this.loading = false;
+        this.isLoading = false;
       }, 3000);
     }
   },
@@ -74,6 +74,13 @@ export default {
             .doc(this.id)
         );
         this.$bind("category", categoriesRef.doc(this.categoryId));
+      }
+    },
+    isSelected: {
+      handler(value) {
+        if (value && this.isLoading) {
+          this.isLoading = false;
+        }
       }
     }
   }
