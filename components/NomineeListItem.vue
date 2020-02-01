@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     vote() {
-      this.$store.commit("setCategoryVote", {
+      this.$store.dispatch("vote/addChoice", {
         nomineeId: this.id,
         nomineeName: this.nominee.name,
         categoryId: this.categoryId,

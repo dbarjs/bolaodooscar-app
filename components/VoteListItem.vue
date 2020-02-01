@@ -75,6 +75,7 @@ export default {
           .update({
             title: autoParse(this.$refs.titleTextField.value.trim(), String)
           })
+          // bind again the doc reference
           .then(this.bindVote);
         this.closeTitleDialog();
       }

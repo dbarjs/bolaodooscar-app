@@ -24,9 +24,9 @@ export default {
   computed: {
     selectedNominee() {
       return (this.categoryId
-      ? this.$store.state.currentChoices[this.categoryId]
+      ? this.$store.state.vote.currentVote.choices[this.categoryId]
       : false)
-        ? this.$store.state.currentChoices[this.categoryId].nomineeId
+        ? this.$store.state.vote.currentVote.choices[this.categoryId].nomineeId
         : false;
     }
   },
