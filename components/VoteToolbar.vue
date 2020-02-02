@@ -1,13 +1,21 @@
 <template>
-  <v-app-bar transition="slide-y-transition" fixed v-model="isVoting">
+  <v-app-bar
+    transition="slide-y-transition"
+    v-model="isVoting"
+    color="#212121"
+    fixed
+    elevate-on-scroll
+  >
     <v-btn icon @click="clearChoices">
-      <v-icon>{{ icons.mdiClose }}</v-icon>
+      <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
     </v-btn>
     <v-toolbar-title class="">
       {{ numberOfVotes }} / {{ numberOfCategories }} votos
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn color="success" @click="confirmVote">Votar</v-btn>
+    <v-btn icon @click="shareVote">
+      <v-icon icon dark>{{ icons.mdiShareVariant }}</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
@@ -19,11 +27,11 @@ import {
   moviesRef,
   Timestamp
 } from "~/firebase";
-import { mdiClose } from "@mdi/js";
+import { mdiArrowLeft, mdiShareVariant } from "@mdi/js";
 export default {
   data() {
     return {
-      icons: { mdiClose }
+      icons: { mdiArrowLeft, mdiShareVariant }
     };
   },
   computed: {
@@ -31,40 +39,20 @@ export default {
       return this.$store.getters["user/getUser"];
     },
     isVoting() {
-      return !!Object.keys(this.$store.state.currentChoices).length;
+      return !!this.$store.state.vote;
     },
     numberOfVotes() {
-      return Object.keys(this.$store.state.currentChoices).length;
+      return Object.keys(this.$store.getters["vote/getChoices"]).length;
     },
     numberOfCategories() {
       return this.$store.getters["categories/getCategoryList"].length;
     }
   },
   methods: {
-    confirmVote() {
-      if (this.user) {
-        const currentChoices = this.$store.state.currentChoices;
-        const choices = [];
-        Object.keys(currentChoices).forEach(choiceKey => {
-          choices.push({
-            ...currentChoices[choiceKey],
-            movie: moviesRef.doc(currentChoices[choiceKey].movieId),
-            category: categoriesRef.doc(currentChoices[choiceKey].categoryId)
-          });
-        });
-        votesRef.add({
-          userId: this.user.uid,
-          user: usersRef.doc(this.user.uid),
-          timestamp: Timestamp.now(),
-          choices
-        });
-        console.log(choices);
-        this.$store.commit("clearCurrentChoices");
-      }
-    },
     clearChoices() {
-      this.$store.commit("clearCurrentChoices");
-    }
+      this.$store.dispatch("vote/clearChoices");
+    },
+    shareVote() {}
   }
 };
 </script>

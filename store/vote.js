@@ -1,4 +1,5 @@
-import { firestoreAction } from "vuexfire";
+import Vue from "vue";
+import { firestoreAction, vuexfireMutations } from "vuexfire";
 import {
   votesRef,
   usersRef,
@@ -12,14 +13,11 @@ export const state = () => ({
 });
 
 export const getters = {
-  getUser: state => state.user
+  getCurrentVote: state => state.currentVote,
+  getChoices: state => (state.currentVote ? state.currentVote.choices : {})
 };
 
-export const mutations = {
-  setUser(state, user) {
-    state.user = user ? user : false;
-  }
-};
+export const mutations = {};
 
 export const actions = {
   bindVoteRef: firestoreAction((context, voteId) => {
@@ -73,6 +71,13 @@ export const actions = {
       } catch (e) {
         console.log(e);
       }
+    }
+  },
+  clearChoices(context) {
+    if (context.state.currentVote) {
+      votesRef.doc(context.state.currentVote.id).update({
+        choices: {}
+      });
     }
   }
 };
