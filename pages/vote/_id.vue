@@ -8,12 +8,38 @@
 <script>
 import CategoryList from "~/components/CategoryList.vue";
 import VoteToolbar from "~/components/VoteToolbar.vue";
+import { votesRef } from "~/firebase";
 export default {
+  data() {
+    return {
+      id: this.$route.params.id
+    };
+  },
+  computed: {
+    voteId() {
+      return this.$store.state.vote.currentVote
+        ? this.$store.state.vote.currentVote.id
+        : false;
+    }
+  },
+  watch: {
+    id: {
+      immediate: true,
+      handler() {
+        if (this.id) {
+          this.$store.dispatch("vote/bindVoteRef", this.id);
+        } else {
+          this.$store.dispatch("vote/createVote").then(voteRef => {
+            this.$router.push("/vote/" + voteRef.id);
+          });
+        }
+      }
+    }
+  },
   components: {
     CategoryList,
     VoteToolbar
-  },
-  transition: "page"
+  }
 };
 </script>
 

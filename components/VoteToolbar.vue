@@ -6,13 +6,19 @@
     fixed
     elevate-on-scroll
   >
-    <v-btn icon @click="clearChoices">
+    <v-btn icon @click="setCurrentVote">
       <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
     </v-btn>
-    <v-toolbar-title class="">
-      {{ numberOfVotes }} / {{ numberOfCategories }} votos
+    <v-toolbar-title>
+      <span v-if="numberOfVotes">
+        {{ numberOfVotes }} / {{ numberOfCategories }} votos
+      </span>
+      <span v-else>Indicados</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-btn icon @click="clearChoices">
+      <v-icon icon dark>{{ icons.mdiPlaylistRemove }}</v-icon>
+    </v-btn>
     <v-btn icon @click="shareVote">
       <v-icon icon dark>{{ icons.mdiShareVariant }}</v-icon>
     </v-btn>
@@ -27,11 +33,11 @@ import {
   moviesRef,
   Timestamp
 } from "~/firebase";
-import { mdiArrowLeft, mdiShareVariant } from "@mdi/js";
+import { mdiArrowLeft, mdiShareVariant, mdiPlaylistRemove } from "@mdi/js";
 export default {
   data() {
     return {
-      icons: { mdiArrowLeft, mdiShareVariant }
+      icons: { mdiArrowLeft, mdiShareVariant, mdiPlaylistRemove }
     };
   },
   computed: {
@@ -49,6 +55,13 @@ export default {
     }
   },
   methods: {
+    setCurrentVote() {
+      // this delay prevents the ui don't update until the page is changed
+      setTimeout(() => {
+        this.$store.dispatch("vote/unbindVoteRef");
+      }, 500);
+      this.$router.push("/");
+    },
     clearChoices() {
       this.$store.dispatch("vote/clearChoices");
     },

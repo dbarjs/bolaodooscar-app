@@ -26,10 +26,16 @@ export default {
         // unbind user data (Vuex) and set to null
         this.$store.dispatch("user/unbindUserRef");
       }
+      this.$store.commit("user/setAuthStateVerifiedState", true);
     }
   },
   created() {
     auth.onAuthStateChanged(this.onAuthStateChanged);
+  },
+  computed: {
+    isAuthStateVerified() {
+      return this.$store.getters["user/isAuthStateVerified"];
+    }
   },
   components: {
     UserInfo,

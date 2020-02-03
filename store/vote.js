@@ -14,6 +14,8 @@ export const state = () => ({
 
 export const getters = {
   getCurrentVote: state => state.currentVote,
+  getCurrentVoteId: state =>
+    state.currentVote ? state => state.currentVote.id : false,
   getChoices: state => (state.currentVote ? state.currentVote.choices : {})
 };
 
@@ -21,8 +23,9 @@ export const mutations = {};
 
 export const actions = {
   bindVoteRef: firestoreAction((context, voteId) => {
-    console.log(voteId);
-    return context.bindFirestoreRef("currentVote", votesRef.doc(voteId));
+    return voteId
+      ? context.bindFirestoreRef("currentVote", votesRef.doc(voteId))
+      : false;
   }),
   unbindVoteRef: firestoreAction(({ unbindFirestoreRef }) => {
     unbindFirestoreRef("currentVote");
@@ -43,6 +46,19 @@ export const actions = {
     }
     return false;
   },
+  updateUser: context => {
+    try {
+      // get active user (if exists):
+      const user = context.rootGetters["user/getUser"];
+      // return the ref current vote:
+      votesRef.doc(context.state.currentVote.id).update({
+        user: user ? usersRef.doc(user.id) : false,
+        userId: user ? user.id : false
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  },
   addChoice: (context, choice) => {
     // normalize the choice object
     const newChoice = {
@@ -54,8 +70,13 @@ export const actions = {
     if (context.state.currentVote) {
       // put the choice on vote:
       votesRef.doc(context.state.currentVote.id).update({
-        ["choices." + newChoice.categoryId]: newChoice
+        ["choices." + newChoice.categoryId]: newChoice,
+        updated: Timestamp.now()
       });
+      // verify if the vote has a userId
+      if (!context.state.currentVote.userId) {
+        context.dispatch("updateUser");
+      }
     } else {
       try {
         // create a vote:
@@ -64,7 +85,8 @@ export const actions = {
           context.dispatch("bindVoteRef", docRef.id).then(vote => {
             // put the choice on vote:
             votesRef.doc(vote.id).update({
-              ["choices." + newChoice.categoryId]: newChoice
+              ["choices." + newChoice.categoryId]: newChoice,
+              updated: Timestamp.now()
             });
           });
         });

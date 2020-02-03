@@ -34,7 +34,12 @@ export default {
       immediate: true,
       handler() {
         if (this.user) {
-          this.$bind("votes", votesRef.where("userId", "==", this.user.uid));
+          this.$bind(
+            "votes",
+            votesRef
+              .where("userId", "==", this.user.uid)
+              .orderBy("updated", "desc")
+          );
         }
       }
     }

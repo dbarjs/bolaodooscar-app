@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="!user">
+  <v-container v-if="!user && isAuthStateVerified">
     <div class="my-3">
       <v-btn
         class="btn--google"
@@ -9,7 +9,7 @@
         block
         color="white"
       >
-        <img class="google-logo" src="google.svg" />
+        <img class="google-logo" src="/google.svg" />
         Log In Com Google
         <template v-slot:loading.google>
           <span class="custom-loader">
@@ -62,6 +62,9 @@ export default {
   computed: {
     user() {
       return this.$store.getters["user/getUser"];
+    },
+    isAuthStateVerified() {
+      return this.$store.getters["user/isAuthStateVerified"];
     }
   },
   data() {

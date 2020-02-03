@@ -1,70 +1,109 @@
 <template>
   <v-col cols="12" v-if="vote">
     <v-card>
-      <v-card-title class="subtitle-1 font-weight-bold">
-        <span v-if="vote.title">{{ vote.title }}</span>
-        <span v-else>Sem Título</span>
+      <v-list-group v-model="showChoiceList">
+        <template v-slot:activator>
+          <v-list-item-avatar size="32">
+            <v-icon>{{ icons.mdiStarBoxMultiple }}</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title class="font-weight-bold">
+              <span v-if="vote.title">{{ vote.title }}</span>
+              <span v-else>Sem Título</span>
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              {{ creationDate }}
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </template>
+        <choice-item
+          v-for="choice in orderedChoices"
+          :key="choice.categoryId"
+          :choice="choice"
+        ></choice-item>
+      </v-list-group>
+      <v-card-actions>
+        <v-btn text :to="voteLink">Visualizar</v-btn>
+        <v-spacer></v-spacer>
         <v-btn icon @click.stop="showTitleDialog()">
-          <v-icon small>{{ icons.mdiPencil }}</v-icon>
+          <v-icon>{{ icons.mdiPencil }}</v-icon>
         </v-btn>
-        <v-dialog
-          v-model="editTitleDialog"
-          max-width="400px"
-          persistent
-          transition="dialog-transition"
-        >
-          <v-card>
-            <v-card-title class="headline">
-              Qual o nome do voto?
-            </v-card-title>
-            <v-container>
-              <v-text-field
-                outlined
-                label="Título da Votação"
-                ref="titleTextField"
-                v-model="newTitle"
-              ></v-text-field>
-            </v-container>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="closeTitleDialog">
-                Cancelar
-              </v-btn>
-              <v-btn color="green darken-1" text @click="saveTitle">
-                Salvar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-card-title>
-      <v-card-subtitle>
-        {{ creationDate }}
-      </v-card-subtitle>
-      <choice-list :choices="vote.choices"></choice-list>
+        <v-btn icon color="red" @click="deleteVote">
+          <v-icon>{{ icons.mdiDelete }}</v-icon>
+        </v-btn>
+      </v-card-actions>
+      <v-dialog
+        v-model="editTitleDialog"
+        max-width="400px"
+        persistent
+        transition="dialog-transition"
+      >
+        <v-card>
+          <v-card-title class="headline">
+            Qual o nome do voto?
+          </v-card-title>
+          <v-container>
+            <v-text-field
+              outlined
+              label="Título da Votação"
+              ref="titleTextField"
+              v-model="newTitle"
+            ></v-text-field>
+          </v-container>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="closeTitleDialog">
+              Cancelar
+            </v-btn>
+            <v-btn color="green darken-1" text @click="saveTitle">
+              Salvar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-card>
   </v-col>
 </template>
 
 <script>
-import ChoiceList from "~/components/ChoiceList.vue";
+import ChoiceItem from "~/components/ChoiceItem.vue";
 import { DateTime } from "luxon";
 import { votesRef } from "~/firebase";
-import { mdiPencil } from "@mdi/js";
+import { mdiPencil, mdiStarBoxMultiple, mdiDelete } from "@mdi/js";
 import autoParse from "auto-parse";
 export default {
   data() {
     return {
       vote: false,
       editTitleDialog: false,
+      showChoiceList: false,
       newTitle: "",
       icons: {
-        mdiPencil
+        mdiPencil,
+        mdiStarBoxMultiple,
+        mdiDelete
       }
     };
   },
   computed: {
+    voteLink() {
+      return this.vote ? "/vote/" + this.voteId : "/";
+    },
     creationDate() {
-      return DateTime.fromSeconds(this.vote.timestamp.seconds).toRelative();
+      return this.vote.created.seconds
+        ? DateTime.fromSeconds(this.vote.created.seconds).toRelative()
+        : false;
+    },
+    orderedChoices() {
+      // order Choices using Category "order" property
+      return Object.values(this.vote.choices).sort((a, b) => {
+        if (a.category.order < b.category.order) {
+          return -1;
+        } else if (a.category.order > b.category.order) {
+          return 1;
+        }
+        return 0;
+      });
     }
   },
   methods: {
@@ -89,6 +128,10 @@ export default {
       }
       this.editTitleDialog = true;
     },
+    deleteVote() {
+      votesRef.doc(this.voteId).delete();
+      this.$unbind("vote");
+    },
     bindVote() {
       // temporary function
       // waiting this bug fix of Vuefire:
@@ -111,9 +154,13 @@ export default {
     }
   },
   components: {
-    ChoiceList
+    ChoiceItem
   }
 };
 </script>
 
-<style></style>
+<style>
+.v-list-group--active > .v-list-group__header .v-list-item__content {
+  color: #ffffff !important;
+}
+</style>
