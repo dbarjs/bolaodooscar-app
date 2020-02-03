@@ -84,6 +84,9 @@ export default {
     UserAuth
   },
   created() {
+    // Verify if the user has logged in
+    this.$store.dispatch("user/verifyAuthState");
+    // Bind main Firestore collections
     this.$store.dispatch("movies/bindMoviesRef");
     this.$store.dispatch("categories/bindCategoriesRef");
   }

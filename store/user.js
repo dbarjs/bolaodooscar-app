@@ -1,5 +1,5 @@
 import { firestoreAction } from "vuexfire";
-import { usersRef } from "~/firebase";
+import { auth, usersRef } from "~/firebase";
 
 export const state = () => ({
   user: false,
@@ -26,5 +26,24 @@ export const actions = {
   }),
   unbindUserRef: firestoreAction(({ unbindFirestoreRef }) => {
     unbindFirestoreRef("user");
-  })
+  }),
+  verifyAuthState: context => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        if (user.providerData[0]) {
+          // set "user" data on Firestore
+          usersRef.doc(user.uid).set({
+            uid: user.uid,
+            providerData: user.providerData[0]
+          });
+          // bind user data (Vuex)
+          context.dispatch("bindUserRef", user.uid);
+        }
+      } else {
+        // unbind user data (Vuex) and set to null
+        context.dispatch("unbindUserRef");
+      }
+      context.commit("setAuthStateVerifiedState", true);
+    });
+  }
 };
