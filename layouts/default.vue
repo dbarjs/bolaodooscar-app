@@ -1,5 +1,5 @@
 <template>
-  <v-app dark class="app">
+  <v-app dark class="app" v-resize="onResize">
     <v-app-bar app color="#212121" elevate-on-scroll>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Bolão do Oscar</v-toolbar-title>
@@ -15,8 +15,13 @@
         <v-icon>{{ icons.mdiGithubCircle }}</v-icon>
       </v-btn>
     </v-app-bar>
-    <nuxt />
-    <v-navigation-drawer app color="#212121" fixed v-model="drawer">
+    <v-navigation-drawer
+      app
+      color="#212121"
+      :temporary="isMobile"
+      :fixed="!isMobile"
+      v-model="drawer"
+    >
       <user-info></user-info>
       <user-sign-in></user-sign-in>
       <v-divider></v-divider>
@@ -41,6 +46,9 @@
       <v-divider v-if="user"></v-divider>
       <user-menu></user-menu>
     </v-navigation-drawer>
+    <v-content>
+      <nuxt />
+    </v-content>
   </v-app>
 </template>
 
@@ -57,11 +65,6 @@ import {
   mdiInformation
 } from "@mdi/js";
 export default {
-  computed: {
-    user() {
-      return this.$store.getters["user/getUser"];
-    }
-  },
   data() {
     return {
       drawer: false,
@@ -75,6 +78,25 @@ export default {
       }
     };
   },
+  computed: {
+    user() {
+      return this.$store.getters["user/getUser"];
+    },
+    isMobile() {
+      return this.$store.state.windowSize.x <= 600;
+    },
+    windowSize() {
+      return this.$store.state.windowSize;
+    }
+  },
+  methods: {
+    onResize() {
+      this.$store.commit("setWindowSize", {
+        x: window.innerWidth,
+        y: window.innerHeight
+      });
+    }
+  },
   components: {
     UserInfo,
     UserMenu,
@@ -86,6 +108,9 @@ export default {
     // Bind main Firestore collections
     this.$store.dispatch("movies/bindMoviesRef");
     this.$store.dispatch("categories/bindCategoriesRef");
+  },
+  mounted() {
+    this.onResize();
   }
 };
 </script>
