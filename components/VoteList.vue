@@ -42,6 +42,14 @@ export default {
           );
         }
       }
+    },
+    votes: {
+      immediate: true,
+      handler(votes) {
+        if (Array.isArray(votes)) {
+          this.$store.commit("setNumberOfVotes", votes.length);
+        }
+      }
     }
   },
   components: {

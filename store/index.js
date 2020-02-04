@@ -1,14 +1,13 @@
-import Vue from "vue";
-import { vuexfireMutations, firestoreAction } from "vuexfire";
+import { vuexfireMutations } from "vuexfire";
 
 export const state = () => ({
-  showUserMenu: false
+  numberOfVotes: 0
 });
 
 export const mutations = {
   ...vuexfireMutations,
-  toggleUserMenu(state) {
-    state.showUserMenu = !state.showUserMenu;
+  setNumberOfVotes(state, value) {
+    state.numberOfVotes = value ? value : 0;
   }
 };
 

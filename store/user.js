@@ -45,5 +45,8 @@ export const actions = {
       }
       context.commit("setAuthStateVerifiedState", true);
     });
+  },
+  async signOut(context) {
+    return auth.signOut();
   }
 };

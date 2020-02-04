@@ -1,5 +1,11 @@
 <template>
-  <v-container v-if="!user && isAuthStateVerified">
+  <v-card
+    outlined
+    v-if="!user && isAuthStateVerified"
+    color="#212121"
+    class="px-2"
+  >
+    <p class="text-center pt-3 mb-0">Entre para começar:</p>
     <div class="my-3">
       <v-btn
         class="btn--google"
@@ -52,7 +58,7 @@
         </template>
       </v-btn>
     </div>
-  </v-container>
+  </v-card>
 </template>
 
 <script>

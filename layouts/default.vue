@@ -17,8 +17,10 @@
     </v-app-bar>
     <nuxt />
     <v-navigation-drawer app color="#212121" fixed v-model="drawer">
-      <user-auth></user-auth>
-      <v-list nav dense shaped v-if="!showUserMenu">
+      <user-info></user-info>
+      <user-sign-in></user-sign-in>
+      <v-divider></v-divider>
+      <v-list nav dense shaped>
         <v-list-item to="/" dark>
           <v-list-item-icon>
             <v-icon>{{ icons.mdiHome }}</v-icon>
@@ -27,43 +29,37 @@
             <span>Início</span>
           </v-list-item-title>
         </v-list-item>
-        <v-list-item to="/votes" dark>
-          <v-list-item-icon>
-            <v-icon>{{ icons.mdiCheckboxMultipleMarked }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>
-            <span>Minhas Apostas</span>
-          </v-list-item-title>
-        </v-list-item>
         <v-list-item to="/about" dark>
           <v-list-item-icon>
             <v-icon>{{ icons.mdiInformation }}</v-icon>
           </v-list-item-icon>
           <v-list-item-title>
-            <span>Sobre o Bolão do Oscar</span>
+            <span>Sobre</span>
           </v-list-item-title>
         </v-list-item>
       </v-list>
+      <v-divider v-if="user"></v-divider>
+      <user-menu></user-menu>
     </v-navigation-drawer>
-    <!-- <v-footer app></v-footer> -->
   </v-app>
 </template>
 
 <script>
-import UserAuth from "~/components/UserAuth.vue";
+import UserInfo from "~/components/UserInfo.vue";
+import UserMenu from "~/components/UserMenu.vue";
+import UserSignIn from "~/components/UserSignIn.vue";
 import {
   mdiHome,
   mdiMovie,
   mdiMenu,
-  mdiCheckboxMultipleMarked,
   mdiGithubCircle,
   mdiTwitter,
   mdiInformation
 } from "@mdi/js";
 export default {
   computed: {
-    showUserMenu() {
-      return this.$store.state.showUserMenu;
+    user() {
+      return this.$store.getters["user/getUser"];
     }
   },
   data() {
@@ -73,7 +69,6 @@ export default {
         mdiHome,
         mdiMovie,
         mdiMenu,
-        mdiCheckboxMultipleMarked,
         mdiGithubCircle,
         mdiTwitter,
         mdiInformation
@@ -81,7 +76,9 @@ export default {
     };
   },
   components: {
-    UserAuth
+    UserInfo,
+    UserMenu,
+    UserSignIn
   },
   created() {
     // Verify if the user has logged in
