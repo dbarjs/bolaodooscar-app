@@ -79,11 +79,15 @@ export const actions = {
       };
       // verify if exists a active vote
       if (context.state.currentVote) {
-        // put the choice on vote:
-        votesRef.doc(context.state.currentVote.id).update({
-          ["choices." + newChoice.categoryId]: newChoice,
-          updated: Timestamp.now()
-        });
+        try {
+          // put the choice on vote:
+          votesRef.doc(context.state.currentVote.id).update({
+            ["choices." + newChoice.categoryId]: newChoice,
+            updated: Timestamp.now()
+          });
+        } catch (e) {
+          console.log(e);
+        }
         // verify if the vote has a userId
         if (!context.state.currentVote.userId) {
           context.dispatch("updateUser");
@@ -109,9 +113,13 @@ export const actions = {
   },
   clearChoices(context) {
     if (context.state.currentVote) {
-      votesRef.doc(context.state.currentVote.id).update({
-        choices: {}
-      });
+      try {
+        votesRef.doc(context.state.currentVote.id).update({
+          choices: {}
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 };

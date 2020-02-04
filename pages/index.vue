@@ -1,10 +1,10 @@
 <template>
-  <div class="pt-12">
+  <div class="pt-4">
     <header>
       <v-container class="d-flex flex-column align-center">
         <v-img class="logo" src="bdo-logo.png" max-width="300"></v-img>
         <p class="subtitle-1 text-center my-4">
-          Organize suas apostas do Oscar e compartilhe!
+          Organize suas apostas e compartilhe!
         </p>
         <v-btn
           color="my-6 success"
