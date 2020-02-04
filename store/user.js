@@ -29,6 +29,7 @@ export const actions = {
   }),
   verifyAuthState: context => {
     auth.onAuthStateChanged(user => {
+      context.commit("setAuthStateVerifiedState", true);
       if (user) {
         if (user.providerData[0]) {
           // set "user" data on Firestore
@@ -43,7 +44,6 @@ export const actions = {
         // unbind user data (Vuex) and set to null
         context.dispatch("unbindUserRef");
       }
-      context.commit("setAuthStateVerifiedState", true);
     });
   },
   async signOut(context) {

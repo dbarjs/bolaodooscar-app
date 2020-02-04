@@ -1,62 +1,74 @@
 <template>
   <v-card
     outlined
-    v-if="!user && isAuthStateVerified"
     color="#212121"
-    class="px-2"
+    v-if="!user"
+    class="px-2 d-flex flex-column align-center"
   >
-    <p class="text-center pt-3 mb-0">Entre para começar:</p>
-    <div class="my-3">
-      <v-btn
-        class="btn--google"
-        @click="signInWithGoogle"
-        :loading="loading.google"
-        :disabled="loading.google"
-        block
-        color="white"
-      >
-        <img class="google-logo" src="/google.svg" />
-        Log In Com Google
-        <template v-slot:loading.google>
-          <span class="custom-loader">
-            <v-icon light>cached</v-icon>
-          </span>
-        </template>
-      </v-btn>
-    </div>
-    <div class="my-3">
-      <v-btn
-        @click="signInWithFacebook"
-        :loading="loading.facebook"
-        :disabled="loading.facebook"
-        block
-        color="#3b5999"
-      >
-        <v-icon left>{{ icons.mdiFacebookBox }}</v-icon>
-        Log In Com Facebook
-        <template v-slot:loading.facebook>
-          <span class="custom-loader">
-            <v-icon light>cached</v-icon>
-          </span>
-        </template>
-      </v-btn>
-    </div>
-    <div class="my-3">
-      <v-btn
-        @click="signInWithTwitter"
-        :loading="loading.twitter"
-        :disabled="loading.twitter"
-        block
-        color="#55acee"
-      >
-        <v-icon left>{{ icons.mdiTwitter }}</v-icon>
-        Log In Com Twitter
-        <template v-slot:loading.twitter>
-          <span class="custom-loader">
-            <v-icon light>cached</v-icon>
-          </span>
-        </template>
-      </v-btn>
+    <v-progress-circular
+      class="py-6"
+      v-if="!isAuthStateVerified"
+      indeterminate
+      color="primary"
+      size="70"
+    ></v-progress-circular>
+    <div
+      class="user-sign-in d-flex flex-column"
+      :class="{ active: !user && isAuthStateVerified }"
+    >
+      <p class="text-center pt-3 mb-0">Entre para começar:</p>
+      <div class="my-3">
+        <v-btn
+          class="btn--google"
+          @click="signInWithGoogle"
+          :loading="loading.google"
+          :disabled="loading.google"
+          block
+          color="white"
+        >
+          <img class="google-logo" src="/google.svg" />
+          Log In Com Google
+          <template v-slot:loading.google>
+            <span class="custom-loader">
+              <v-icon light>cached</v-icon>
+            </span>
+          </template>
+        </v-btn>
+      </div>
+      <div class="my-0">
+        <v-btn
+          @click="signInWithFacebook"
+          :loading="loading.facebook"
+          :disabled="loading.facebook"
+          block
+          color="#3b5999"
+        >
+          <v-icon left>{{ icons.mdiFacebookBox }}</v-icon>
+          Log In Com Facebook
+          <template v-slot:loading.facebook>
+            <span class="custom-loader">
+              <v-icon light>cached</v-icon>
+            </span>
+          </template>
+        </v-btn>
+      </div>
+      <div class="my-3">
+        <v-btn
+          @click="signInWithTwitter"
+          :loading="loading.twitter"
+          :disabled="loading.twitter"
+          block
+          color="#55acee"
+        >
+          <v-icon left>{{ icons.mdiTwitter }}</v-icon>
+          Log In Com Twitter
+          <template v-slot:loading.twitter>
+            <span class="custom-loader">
+              <v-icon light>cached</v-icon>
+            </span>
+          </template>
+        </v-btn>
+      </div>
     </div>
   </v-card>
 </template>
@@ -65,14 +77,6 @@
 import { auth, authProviders } from "~/firebase";
 import { mdiFacebookBox, mdiGoogle, mdiTwitter } from "@mdi/js";
 export default {
-  computed: {
-    user() {
-      return this.$store.getters["user/getUser"];
-    },
-    isAuthStateVerified() {
-      return this.$store.getters["user/isAuthStateVerified"];
-    }
-  },
   data() {
     return {
       icons: {
@@ -86,6 +90,14 @@ export default {
         twitter: false
       }
     };
+  },
+  computed: {
+    user() {
+      return this.$store.getters["user/getUser"];
+    },
+    isAuthStateVerified() {
+      return this.$store.getters["user/isAuthStateVerified"];
+    }
   },
   methods: {
     signInWithGoogle() {
@@ -105,6 +117,15 @@ export default {
 </script>
 
 <style>
+.user-sign-in {
+  opacity: 0;
+  transition: all 0.6s 0.3s ease-in;
+}
+
+.user-sign-in.active {
+  opacity: 1;
+}
+
 .btn--google {
   color: rgba(0, 0, 0, 0.87) !important;
 }
