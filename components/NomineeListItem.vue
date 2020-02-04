@@ -82,6 +82,20 @@ export default {
           this.isLoading = false;
         }
       }
+    },
+    nominee: {
+      immediate: true,
+      handler(nominee) {
+        if (nominee) {
+          if (!nominee.movieId) {
+            console.warn(
+              "Um indicado necessita de alguma especificação",
+              nominee,
+              this.categoryId
+            );
+          }
+        }
+      }
     }
   }
 };
