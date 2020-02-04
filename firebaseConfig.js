@@ -5,5 +5,6 @@ export default {
   projectId: "bolaodooscar-app",
   storageBucket: "bolaodooscar-app.appspot.com",
   messagingSenderId: "579261583359",
-  appId: "1:579261583359:web:3ef6624423a37c695921ca"
+  appId: "1:579261583359:web:453c65bf43ab69285921ca",
+  measurementId: "G-MQTZWTWMS4"
 };
