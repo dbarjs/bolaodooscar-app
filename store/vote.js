@@ -5,7 +5,8 @@ import {
   usersRef,
   moviesRef,
   categoriesRef,
-  Timestamp
+  Timestamp,
+  FieldValue
 } from "~/firebase";
 
 export const state = () => ({
@@ -127,6 +128,15 @@ export const actions = {
           console.log(e);
         }
       }
+    }
+  },
+  removeVote(context, categoryId) {
+    const voteId = context.state.currentVote.id;
+    if (categoryId && voteId) {
+      votesRef.doc(voteId).update({
+        ["choices." + categoryId]: FieldValue.delete(),
+        updated: Timestamp.now()
+      });
     }
   },
   clearChoices(context) {

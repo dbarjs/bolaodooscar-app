@@ -21,6 +21,6 @@ export const moviesRef = database.collection("movies");
 export const usersRef = database.collection("users");
 export const votesRef = database.collection("votes");
 
-// Timestamp
-const { Timestamp, GeoPoint } = firebase.firestore;
-export { Timestamp, GeoPoint };
+// Firestore Methods
+const { Timestamp, GeoPoint, FieldValue } = firebase.firestore;
+export { Timestamp, GeoPoint, FieldValue };

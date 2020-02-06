@@ -4,7 +4,6 @@
       <h3 class="category-list-item-name title">
         <span>{{ category.name }}</span>
       </h3>
-      <selected-nominee :categoryId="category.id"></selected-nominee>
       <nominee-list :categoryId="category.id"></nominee-list>
     </div>
   </v-lazy>
