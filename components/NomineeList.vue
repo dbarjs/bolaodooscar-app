@@ -1,5 +1,9 @@
 <template>
-  <div class="nominee-list" v-if="categoryId">
+  <div
+    class="nominee-list"
+    v-if="categoryId"
+    :class="{ hasSelectedNominee: selectedNominee }"
+  >
     <nominee-list-item
       v-for="nominee in nominees"
       :key="nominee.id"
@@ -61,6 +65,7 @@ export default {
   display: flex;
   flex-flow: row;
   overflow-x: auto;
+  overflow-y: hidden;
   padding-left: 1.5rem;
 }
 
@@ -68,5 +73,10 @@ export default {
   content: ".";
   visibility: hidden;
   min-width: 1.5rem;
+  transition: all 0.6s ease-in-out;
+}
+
+.nominee-list.hasSelectedNominee::after {
+  min-width: 0;
 }
 </style>

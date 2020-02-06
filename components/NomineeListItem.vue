@@ -7,22 +7,22 @@
       <div class="nominee-list-item-poster elevation-10">
         <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
       </div>
-      <div class="selected-nominee-info" v-if="!actionEnabled && isSelected">
-        <h4 class="selected-nominee-name subtitle-2">
+      <div class="nominee-list-item-info" v-if="!actionEnabled && isSelected">
+        <h4 class="nominee-list-item-name subtitle-2">
           <span>{{ nominee.name }}</span>
         </h4>
-        <p class="selected-nominee-title subtitle-2" v-if="title">
+        <p class="nominee-list-item-title subtitle-2" v-if="title">
           <span>{{ title }}</span>
         </p>
         <p
-          class="selected-nominee-original-title"
+          class="nominee-list-item-original-title"
           v-if="!title && originalTitle"
         >
           <span>{{ originalTitle }} (original)</span>
         </p>
-        <div class="selected-nominee-meta">
-          <div class="selected-nominee-meta-item imdb" v-if="imdbRating">
-            <span class="selected-nominee-meta-item-title">
+        <div class="nominee-list-item-meta">
+          <div class="nominee-list-item-meta-item imdb" v-if="imdbRating">
+            <span class="nominee-list-item-meta-item-title">
               <span>
                 <v-icon color="#f5c518" x-small>
                   {{ icons.mdiStar }}
@@ -31,31 +31,35 @@
                 <small>/10</small>
               </span>
             </span>
-            <span class="selected-nominee-meta-item-subtitle">
+            <span class="nominee-list-item-meta-item-subtitle">
               <span>IMDb</span>
             </span>
           </div>
           <v-divider vertical inset></v-divider>
-          <div class="selected-nominee-meta-item metascore" v-if="metascore">
-            <span class="selected-nominee-meta-item-title">
+          <div class="nominee-list-item-meta-item metascore" v-if="metascore">
+            <span class="nominee-list-item-meta-item-title">
               <span>{{ metascore }} </span>
             </span>
-            <span class="selected-nominee-meta-item-subtitle">
+            <span class="nominee-list-item-meta-item-subtitle">
               <span>Metacritic</span>
             </span>
           </div>
           <v-divider vertical inset></v-divider>
-          <div class="selected-nominee-meta-item runtime" v-if="runtime">
-            <span class="selected-nominee-meta-item-title">
+          <div class="nominee-list-item-meta-item runtime" v-if="runtime">
+            <span class="nominee-list-item-meta-item-title">
               <span v-if="runtime.hours">{{ runtime.hours }}h</span>
               <span>{{ runtime.minutes }}min </span>
             </span>
-            <span class="selected-nominee-meta-item-subtitle">
+            <span class="nominee-list-item-meta-item-subtitle">
               <span>Duração</span>
             </span>
           </div>
         </div>
-        <v-btn color="success" @click="removeVote">troca</v-btn>
+        <div class="d-flex" v-if="signedUserIsVoteOwner">
+          <v-btn color="warning" outlined x-small @click="removeVote"
+            >Desfazer Voto</v-btn
+          >
+        </div>
       </div>
     </div>
     <div
@@ -63,6 +67,7 @@
       v-if="signedUserIsVoteOwner && actionEnabled"
     >
       <v-btn
+        class="mb-1"
         :disabled="isSelected"
         :loading="isLoading && !isSelected"
         dense
@@ -226,6 +231,7 @@ export default {
   margin: 0 0.5625em 1.125em;
   transition: all 0.6s ease-in-out;
   width: 90px;
+  max-width: 360px;
 }
 
 .nominee-list-item:first-of-type {
@@ -299,6 +305,83 @@ export default {
   display: flex;
   flex-flow: column;
   width: 100%;
+}
+
+.nominee-list-item-info {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  padding-left: 1rem;
+  width: 100px;
+}
+
+.nominee-list-item-info p {
+  margin-bottom: 0;
+}
+
+.nominee-list-item-name,
+.nominee-list-item-title,
+.nominee-list-item-original-title {
+  padding-right: 1rem;
+}
+
+.nominee-list-item-name.subtitle-2 span {
+  font-weight: 900;
+  font-size: 1.125em;
+}
+
+.nominee-list-item-original-title {
+  font-weight: 500;
+  font-size: 0.75em;
+}
+
+.nominee-list-item-meta {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0.5rem 0;
+}
+
+.nominee-list-item-meta::after {
+  content: ".";
+  visibility: hidden;
+  min-width: 1rem;
+}
+
+.nominee-list-item-meta-item {
+  display: flex;
+  flex-flow: column;
+  margin: 0 0.6125rem;
+  width: 60px;
+}
+
+.nominee-list-item-meta-item:first-of-type {
+  margin-left: 0;
+}
+
+.nominee-list-item-meta-item:last-of-type {
+  margin-right: 0;
+}
+
+.nominee-list-item-meta-item-title {
+  color: #f5f5f5;
+  white-space: nowrap;
+  font-size: 0.77em;
+  font-weight: 700;
+}
+
+.nominee-list-item-meta-item-title small {
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+.nominee-list-item-meta-item-subtitle {
+  color: #e0e0e0;
+  font-size: 0.6875em;
+  font-weight: 400;
 }
 
 .nominee-list-item-label-title.subtitle-2 {

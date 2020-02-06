@@ -1,5 +1,5 @@
 <template>
-  <v-lazy min-height="290px">
+  <v-lazy min-height="230px" v-if="selectedNominee">
     <div class="category-list-item">
       <h3 class="category-list-item-name title">
         <span>{{ category.name }}</span>
