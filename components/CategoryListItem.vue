@@ -4,7 +4,8 @@
       <h3 class="category-list-item-name title">
         <span>{{ category.name }}</span>
       </h3>
-      <nominee-list v-bind:categoryId="category.id"></nominee-list>
+      <selected-nominee :categoryId="category.id"></selected-nominee>
+      <nominee-list :categoryId="category.id"></nominee-list>
     </div>
   </v-lazy>
 </template>
@@ -12,15 +13,22 @@
 <script>
 import { categoriesRef } from "~/firebase";
 import NomineeList from "~/components/NomineeList.vue";
+import SelectedNominee from "~/components/SelectedNominee.vue";
 export default {
-  components: {
-    NomineeList
+  computed: {
+    selectedNominee() {
+      return this.$store.getters["vote/getSelectedNominee"](this.category.id);
+    }
   },
   props: {
     category: {
       required: true,
       type: Object
     }
+  },
+  components: {
+    NomineeList,
+    SelectedNominee
   }
 };
 </script>

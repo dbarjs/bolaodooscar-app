@@ -1,12 +1,12 @@
 <template>
   <div class="nominee-list" v-if="categoryId">
-    <!-- <selected-nominee :categoryId="categoryId"></selected-nominee> -->
     <nominee-list-item
       v-for="nominee in nominees"
       :key="nominee.id"
       :id="nominee.id"
       :categoryId="categoryId"
       :selectedNominee="selectedNominee"
+      :signedUserIsVoteOwner="signedUserIsVoteOwner"
     ></nominee-list-item>
   </div>
 </template>
@@ -14,7 +14,6 @@
 <script>
 import { categoriesRef } from "~/firebase";
 import NomineeListItem from "~/components/NomineeListItem.vue";
-import SelectedNominee from "~/components/SelectedNominee.vue";
 export default {
   data() {
     return {
@@ -23,11 +22,12 @@ export default {
   },
   computed: {
     selectedNominee() {
-      return (this.categoryId && this.$store.state.vote.currentVote
-      ? this.$store.state.vote.currentVote.choices[this.categoryId]
-      : false)
-        ? this.$store.state.vote.currentVote.choices[this.categoryId].nomineeId
-        : false;
+      return this.$store.getters["vote/getSelectedNominee"](this.categoryId);
+    },
+    signedUserIsVoteOwner() {
+      const userId = this.$store.getters["user/getUserId"];
+      const ownerId = this.$store.getters["vote/getCurrentVoteOwnerId"];
+      return userId && ownerId ? userId === ownerId : false;
     }
   },
   props: {
@@ -50,8 +50,7 @@ export default {
     }
   },
   components: {
-    NomineeListItem,
-    SelectedNominee
+    NomineeListItem
   }
 };
 </script>

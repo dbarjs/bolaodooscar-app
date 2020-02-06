@@ -1,25 +1,27 @@
 <template>
   <div v-if="nominee" class="nominee-list-item">
-    <div class="nominee-list-item-poster elevation-10">
-      <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
-    </div>
-    <div class="nominee-list-item-action">
-      <v-btn
-        :disabled="isSelected"
-        :loading="isLoading && !isSelected"
-        dense
-        x-small
-        block
-        color="secondary"
-        @click="vote"
-      >
-        <span v-if="!isSelected">Votar</span>
-        <span v-else>Selecionado</span>
-      </v-btn>
-    </div>
-    <div class="nominee-list-item-meta">
-      <span class="nominee-list-item-title subtitle-2">
-        <span>{{ nominee.name }}</span>
+    <div class="nominee-list-item-content">
+      <div class="nominee-list-item-poster elevation-10">
+        <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
+      </div>
+      <div class="nominee-list-item-action" v-if="signedUserIsVoteOwner">
+        <v-btn
+          :disabled="isSelected"
+          :loading="isLoading && !isSelected"
+          dense
+          x-small
+          block
+          color="secondary"
+          @click="vote"
+        >
+          <span v-if="!isSelected">Votar</span>
+          <span v-else>Selecionado</span>
+        </v-btn>
+      </div>
+      <span class="nominee-list-item-meta">
+        <span class="nominee-list-item-title subtitle-2">
+          <span>{{ nominee.name }}</span>
+        </span>
       </span>
     </div>
   </div>
@@ -61,7 +63,7 @@ export default {
       }, 3000);
     }
   },
-  props: ["id", "categoryId", "selectedNominee"],
+  props: ["id", "categoryId", "selectedNominee", "signedUserIsVoteOwner"],
   watch: {
     id: {
       immediate: true,

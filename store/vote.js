@@ -14,9 +14,27 @@ export const state = () => ({
 
 export const getters = {
   getCurrentVote: state => state.currentVote,
-  getCurrentVoteId: state =>
-    state.currentVote ? state => state.currentVote.id : false,
-  getChoices: state => (state.currentVote ? state.currentVote.choices : {})
+  getCurrentVoteId: state => (state.currentVote ? tate.currentVote.id : false),
+  getChoices: state => (state.currentVote ? state.currentVote.choices : {}),
+  getCurrentVoteOwnerId: state => {
+    if (state.currentVote) {
+      return state.currentVote.user
+        ? state.currentVote.user.id
+          ? state.currentVote.user.id
+          : false
+        : false;
+    }
+    return false;
+  },
+  getSelectedNominee(state) {
+    // return nominee id
+    return categoryId =>
+      state.currentVote && categoryId
+        ? state.currentVote.choices[categoryId]
+          ? state.currentVote.choices[categoryId].nomineeId
+          : false
+        : false;
+  }
 };
 
 export const mutations = {};

@@ -8,6 +8,7 @@ export const state = () => ({
 
 export const getters = {
   getUser: state => state.user,
+  getUserId: state => (state.user ? state.user.id : false),
   isAuthStateVerified: state => state.isAuthStateVerified
 };
 
