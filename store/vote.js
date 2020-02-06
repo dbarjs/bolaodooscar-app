@@ -15,7 +15,7 @@ export const state = () => ({
 
 export const getters = {
   getCurrentVote: state => state.currentVote,
-  getCurrentVoteId: state => (state.currentVote ? tate.currentVote.id : false),
+  getCurrentVoteId: state => (state.currentVote ? state.currentVote.id : false),
   getChoices: state => (state.currentVote ? state.currentVote.choices : {}),
   getCurrentVoteOwnerId: state => {
     if (state.currentVote) {

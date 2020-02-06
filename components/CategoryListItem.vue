@@ -1,5 +1,5 @@
 <template>
-  <v-lazy min-height="230px" v-if="selectedNominee">
+  <v-lazy min-height="230px" v-if="selectedNominee || signedUserIsVoteOwner">
     <div class="category-list-item">
       <h3 class="category-list-item-name title">
         <span>{{ category.name }}</span>
@@ -17,6 +17,11 @@ export default {
   computed: {
     selectedNominee() {
       return this.$store.getters["vote/getSelectedNominee"](this.category.id);
+    },
+    signedUserIsVoteOwner() {
+      const userId = this.$store.getters["user/getUserId"];
+      const ownerId = this.$store.getters["vote/getCurrentVoteOwnerId"];
+      return userId && ownerId ? userId === ownerId : false;
     }
   },
   props: {

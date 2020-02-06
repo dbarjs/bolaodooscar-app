@@ -1,9 +1,9 @@
 <template>
   <v-app-bar
+    app
     transition="slide-y-transition"
     v-model="isVoting"
     color="#212121"
-    fixed
     elevate-on-scroll
   >
     <v-btn icon @click="setCurrentVote">
@@ -16,7 +16,8 @@
       <span v-else>Indicados</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn icon @click="clearChoices">
+    <clear-choices-dialog></clear-choices-dialog>
+    <v-btn icon @click.stop="clearChoices">
       <v-icon icon dark>{{ icons.mdiPlaylistRemove }}</v-icon>
     </v-btn>
     <v-btn icon @click="shareVote">
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+import ClearChoicesDialog from "~/components/ClearChoicesDialog.vue";
 import {
   votesRef,
   usersRef,
@@ -52,6 +54,9 @@ export default {
     },
     numberOfCategories() {
       return this.$store.getters["categories/getCategoryList"].length;
+    },
+    currentVoteId() {
+      return this.$store.getters["vote/getCurrentVoteId"];
     }
   },
   methods: {
@@ -63,9 +68,29 @@ export default {
       this.$router.push("/");
     },
     clearChoices() {
-      this.$store.dispatch("vote/clearChoices");
+      this.$store.commit("setClearChoicesDialog", true);
     },
-    shareVote() {}
+    shareVote() {
+      if (this.currentVoteId) {
+        const shareData = {
+          title: "Bolão do Oscar",
+          text: "Veja minhas apostas para o Oscar 2020!",
+          url:
+            "https://bolaodooscar.web.app/vote/" +
+            this.$store.getters["vote/getCurrentVoteId"]
+        };
+        console.log(shareData);
+        try {
+          navigator.share(shareData);
+          console.log("Deu certo");
+        } catch (err) {
+          console.warn("Error: " + err);
+        }
+      }
+    }
+  },
+  components: {
+    ClearChoicesDialog
   }
 };
 </script>

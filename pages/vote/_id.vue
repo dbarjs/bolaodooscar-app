@@ -1,13 +1,11 @@
 <template>
   <div class="vote-page">
     <category-list></category-list>
-    <vote-toolbar></vote-toolbar>
   </div>
 </template>
 
 <script>
 import CategoryList from "~/components/CategoryList.vue";
-import VoteToolbar from "~/components/VoteToolbar.vue";
 import { votesRef } from "~/firebase";
 export default {
   data() {
@@ -37,8 +35,7 @@ export default {
     }
   },
   components: {
-    CategoryList,
-    VoteToolbar
+    CategoryList
   }
 };
 </script>

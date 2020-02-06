@@ -1,20 +1,7 @@
 <template>
   <v-app dark class="app" v-resize="onResize">
-    <v-app-bar app color="#212121" elevate-on-scroll>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Bolão do Oscar</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon href="https://twitter.com/dbarjs" target="_blank">
-        <v-icon>{{ icons.mdiTwitter }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        href="https://github.com/dbarjs/bolaodooscar-app"
-        target="_blank"
-      >
-        <v-icon>{{ icons.mdiGithubCircle }}</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <app-bar v-if="routeName == 'index'"></app-bar>
+    <vote-toolbar v-if="routeName == 'vote-id'"></vote-toolbar>
     <v-navigation-drawer
       app
       color="#212121"
@@ -53,32 +40,32 @@
 </template>
 
 <script>
+import AppBar from "~/components/AppBar.vue";
 import UserInfo from "~/components/UserInfo.vue";
 import UserMenu from "~/components/UserMenu.vue";
 import UserSignIn from "~/components/UserSignIn.vue";
-import {
-  mdiHome,
-  mdiMovie,
-  mdiMenu,
-  mdiGithubCircle,
-  mdiTwitter,
-  mdiInformation
-} from "@mdi/js";
+import VoteToolbar from "~/components/VoteToolbar.vue";
+import { mdiHome, mdiMovie, mdiMenu, mdiInformation } from "@mdi/js";
 export default {
   data() {
     return {
-      drawer: false,
       icons: {
         mdiHome,
         mdiMovie,
         mdiMenu,
-        mdiGithubCircle,
-        mdiTwitter,
         mdiInformation
       }
     };
   },
   computed: {
+    drawer: {
+      get() {
+        return this.$store.state.drawer;
+      },
+      set(value) {
+        this.$store.commit("setDrawer", value);
+      }
+    },
     user() {
       return this.$store.getters["user/getUser"];
     },
@@ -87,6 +74,9 @@ export default {
     },
     windowSize() {
       return this.$store.state.windowSize;
+    },
+    routeName() {
+      return this.$route.name;
     }
   },
   methods: {
@@ -97,11 +87,6 @@ export default {
       });
     }
   },
-  components: {
-    UserInfo,
-    UserMenu,
-    UserSignIn
-  },
   created() {
     // Verify if the user has logged in
     this.$store.dispatch("user/verifyAuthState");
@@ -111,6 +96,13 @@ export default {
   },
   mounted() {
     this.onResize();
+  },
+  components: {
+    AppBar,
+    UserInfo,
+    UserMenu,
+    UserSignIn,
+    VoteToolbar
   }
 };
 </script>
