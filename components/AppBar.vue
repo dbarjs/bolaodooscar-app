@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app color="#212121" elevate-on-scroll>
     <v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
-    <v-toolbar-title>Bolão do Oscar</v-toolbar-title>
+    <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn icon href="https://twitter.com/dbarjs" target="_blank">
       <v-icon>{{ icons.mdiTwitter }}</v-icon>
@@ -17,19 +17,37 @@
 </template>
 
 <script>
-import { mdiGithubCircle, mdiTwitter } from "@mdi/js";
+import { mdiArrowLeft, mdiGithubCircle, mdiTwitter } from "@mdi/js";
 export default {
   data() {
     return {
       icons: {
+        mdiArrowLeft,
         mdiGithubCircle,
         mdiTwitter
       }
     };
   },
+  computed: {
+    pageTitle() {
+      switch (this.$route.name) {
+        case "votes":
+          return "Minhas Apostas";
+          break;
+        case "index":
+          return "Bolão do Oscar";
+          break;
+        default:
+          return "Bolão do Oscar";
+      }
+    }
+  },
   methods: {
     toggleDrawer() {
       this.$store.commit("toggleDrawer");
+    },
+    backToPreviousPage() {
+      this.$router.back();
     }
   }
 };

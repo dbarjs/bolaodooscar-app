@@ -2,7 +2,6 @@
   <v-app-bar
     app
     transition="slide-y-transition"
-    v-model="isVoting"
     color="#212121"
     elevate-on-scroll
   >

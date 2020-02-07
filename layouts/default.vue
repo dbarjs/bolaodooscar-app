@@ -1,6 +1,6 @@
 <template>
   <v-app dark class="app" v-resize="onResize">
-    <app-bar v-if="routeName == 'index'"></app-bar>
+    <app-bar v-if="routeName != 'vote-id'"></app-bar>
     <vote-toolbar v-if="routeName == 'vote-id'"></vote-toolbar>
     <v-navigation-drawer
       app
