@@ -4,6 +4,7 @@ export const state = () => ({
   numberOfVotes: 0,
   drawer: false,
   clearChoicesDialog: false,
+  shareDialog: false,
   windowSize: {
     x: 0,
     y: 0
@@ -32,6 +33,9 @@ export const mutations = {
   },
   setClearChoicesDialog(state, value) {
     state.clearChoicesDialog = !!value;
+  },
+  setShareDialog(state, value) {
+    state.shareDialog = !!value;
   }
 };
 

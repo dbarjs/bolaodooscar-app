@@ -16,18 +16,20 @@
       <span v-else>Indicados</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <clear-choices-dialog></clear-choices-dialog>
     <v-btn icon @click.stop="clearChoices">
       <v-icon icon dark>{{ icons.mdiPlaylistRemove }}</v-icon>
     </v-btn>
     <v-btn icon @click="shareVote">
-      <v-icon icon dark>{{ icons.mdiShareVariant }}</v-icon>
+      <v-icon icon dark>{{ icons.mdiShare }}</v-icon>
     </v-btn>
+    <clear-choices-dialog></clear-choices-dialog>
+    <share-dialog></share-dialog>
   </v-app-bar>
 </template>
 
 <script>
 import ClearChoicesDialog from "~/components/ClearChoicesDialog.vue";
+import ShareDialog from "~/components/ShareDialog.vue";
 import {
   votesRef,
   usersRef,
@@ -35,11 +37,11 @@ import {
   moviesRef,
   Timestamp
 } from "~/firebase";
-import { mdiArrowLeft, mdiShareVariant, mdiPlaylistRemove } from "@mdi/js";
+import { mdiArrowLeft, mdiShare, mdiPlaylistRemove } from "@mdi/js";
 export default {
   data() {
     return {
-      icons: { mdiArrowLeft, mdiShareVariant, mdiPlaylistRemove }
+      icons: { mdiArrowLeft, mdiShare, mdiPlaylistRemove }
     };
   },
   computed: {
@@ -71,26 +73,12 @@ export default {
       this.$store.commit("setClearChoicesDialog", true);
     },
     shareVote() {
-      if (this.currentVoteId) {
-        const shareData = {
-          title: "Bolão do Oscar",
-          text: "Veja minhas apostas para o Oscar 2020!",
-          url:
-            "https://bolaodooscar.web.app/vote/" +
-            this.$store.getters["vote/getCurrentVoteId"]
-        };
-        console.log(shareData);
-        try {
-          navigator.share(shareData);
-          console.log("Deu certo");
-        } catch (err) {
-          console.warn("Error: " + err);
-        }
-      }
+      this.$store.dispatch("vote/shareVote");
     }
   },
   components: {
-    ClearChoicesDialog
+    ClearChoicesDialog,
+    ShareDialog
   }
 };
 </script>

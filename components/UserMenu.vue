@@ -6,14 +6,6 @@
       </v-list-item-icon>
       <v-list-item-title>Conta</v-list-item-title>
     </v-list-item>
-    <v-list-item to="/votes" dark>
-      <v-list-item-icon>
-        <v-icon>{{ icons.mdiCheckboxMultipleMarked }}</v-icon>
-      </v-list-item-icon>
-      <v-list-item-title>
-        <span>Minhas Apostas</span>
-      </v-list-item-title>
-    </v-list-item>
     <v-list-item link @click="signOut">
       <v-list-item-icon>
         <v-icon>{{ icons.mdiLogout }}</v-icon>

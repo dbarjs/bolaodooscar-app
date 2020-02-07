@@ -149,5 +149,23 @@ export const actions = {
         console.log(e);
       }
     }
+  },
+  shareVote(context) {
+    if (context.getters.getCurrentVoteId) {
+      const shareData = {
+        title: "Bolão do Oscar",
+        text: "Veja minhas apostas para o Oscar 2020!",
+        url:
+          "https://bolaodooscar.web.app/vote/" +
+          context.getters.getCurrentVoteId
+      };
+      try {
+        // Try to use the native share API
+        navigator.share(shareData);
+      } catch (err) {
+        // if not allowed, open the Share Dialog
+        context.commit("setShareDialog", true, { root: true });
+      }
+    }
   }
 };

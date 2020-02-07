@@ -5,16 +5,44 @@
       v-bind:category="category"
       :key="category.id"
     ></category-list-item>
+    <v-fab-transition>
+      <v-btn
+        color="accent"
+        fab
+        large
+        dark
+        fixed
+        right
+        bottom
+        class="v-btn--example"
+        @click="shareVote"
+      >
+        <v-icon>{{ icons.mdiShare }}</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </div>
 </template>
 
 <script>
 import { categoriesRef } from "~/firebase";
+import { mdiShare } from "@mdi/js";
 import CategoryListItem from "~/components/CategoryListItem.vue";
 export default {
+  data() {
+    return {
+      icons: {
+        mdiShare
+      }
+    };
+  },
   computed: {
     categories() {
       return this.$store.getters["categories/getCategoryList"];
+    }
+  },
+  methods: {
+    shareVote() {
+      this.$store.dispatch("vote/shareVote");
     }
   },
   components: {
