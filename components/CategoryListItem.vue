@@ -1,5 +1,5 @@
 <template>
-  <v-lazy min-height="230px" v-if="selectedNominee || signedUserIsVoteOwner">
+  <v-lazy min-height="210px" v-if="selectedNominee || signedUserIsVoteOwner">
     <div class="category-list-item">
       <h3 class="category-list-item-name title">
         <span>{{ category.name }}</span>
@@ -46,5 +46,15 @@ export default {
   font-size: 1rem !important;
   font-weight: 500;
   margin: 0 0 1.125rem 1.5rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .category-list-item {
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  .category-list-item {
+  }
 }
 </style>

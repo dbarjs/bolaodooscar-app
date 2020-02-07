@@ -67,7 +67,7 @@
       v-if="signedUserIsVoteOwner && actionEnabled"
     >
       <v-btn
-        class="mb-1"
+        class="nominee-list-item-action-button"
         :disabled="isSelected"
         :loading="isLoading && !isSelected"
         dense
@@ -231,7 +231,6 @@ export default {
   margin: 0 0.5625em 1.125em;
   transition: all 0.6s ease-in-out;
   width: 90px;
-  max-width: 360px;
 }
 
 .nominee-list-item:first-of-type {
@@ -249,8 +248,8 @@ export default {
 
 .nominee-list-item.hidden {
   height: 0;
-  width: 0%;
   margin: 0;
+  width: 0;
 }
 
 .nominee-list-item-content.horizontal {
@@ -262,37 +261,34 @@ export default {
   margin-bottom: 0.75em;
   border-radius: 7px;
   overflow: hidden;
-  transition: opacity;
+  transition: all 0.4s 0.2s ease-in-out;
+  height: 133px;
   width: 90px;
 }
 
 .nominee-list-item.selected .nominee-list-item-poster {
+  height: 180px;
   width: 122px;
 }
 
 .nominee-list-item.hidden .nominee-list-item-poster {
   opacity: 0;
+  height: 0;
   width: 0;
 }
 
 .nominee-list-item-image {
-  width: 90px;
-  height: 133px;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
-  transition: height 0.6s ease-in-out;
-}
-
-.nominee-list-item.selected .nominee-list-item-image {
-  width: 122px;
-  height: 180px;
-}
-
-.nominee-list-item.hidden .nominee-list-item-image {
-  width: 0;
 }
 
 .nominee-list-item-action {
   transition: all 0.6s ease-in-out;
+}
+
+.nominee-list-item-action-button {
+  margin-bottom: 4px !important;
 }
 
 .nominee-list-item.selected .nominee-list-item-action,
@@ -394,5 +390,98 @@ export default {
   font-size: 0.77em;
   font-weight: 500;
   line-height: 0.5em;
+}
+
+@media screen and (min-width: 800px) {
+  .nominee-list-item {
+    width: 122px;
+    margin: 0 0.5625em 1.5em;
+  }
+
+  .nominee-list-item.selected {
+    max-width: 480px;
+  }
+
+  .nominee-list-item-poster {
+    height: 180px;
+    width: 122px;
+  }
+
+  .nominee-list-item.selected .nominee-list-item-poster {
+    height: 230px;
+    width: 156px;
+  }
+
+  .nominee-list-item-action-button {
+    height: 24px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .nominee-list-item-info {
+    padding-left: 1rem;
+  }
+
+  .nominee-list-item-name,
+  .nominee-list-item-title,
+  .nominee-list-item-original-title {
+    padding-right: 1.5rem;
+  }
+
+  .nominee-list-item-name.subtitle-2 span {
+    font-size: 1.5em;
+  }
+
+  .nominee-list-item-original-title {
+    font-size: 1em;
+  }
+
+  .nominee-list-item-meta {
+    margin: 0.875rem 0;
+  }
+
+  .nominee-list-item-meta::after {
+    min-width: 1rem;
+  }
+
+  .nominee-list-item-meta-item {
+    margin: 0 0.875rem;
+    width: 64px;
+  }
+
+  .nominee-list-item-meta-item-title {
+    font-size: 0.87em;
+  }
+
+  .nominee-list-item-meta-item-subtitle {
+    font-size: 0.75em;
+  }
+
+  .nominee-list-item-label-title.subtitle-2 {
+    line-height: 1.25;
+  }
+
+  .nominee-list-item-label-title.subtitle-2 span {
+    font-size: 0.87em;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .nominee-list-item {
+    width: 156px;
+    margin: 0 0.5625em 1.5em;
+  }
+
+  .nominee-list-item-poster {
+    height: 230px;
+    width: 156px;
+  }
+
+  .nominee-list-item.selected .nominee-list-item-poster {
+    height: 230px;
+    width: 156px;
+  }
+}
+
+@media screen and (min-width: 1500px) {
 }
 </style>

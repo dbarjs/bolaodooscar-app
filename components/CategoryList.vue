@@ -57,5 +57,13 @@ export default {
 <style>
 .category-list {
   margin: 0.5rem 0 4.5rem;
+  max-width: 760px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1000px) {
+  .category-list {
+    max-width: 900px;
+  }
 }
 </style>

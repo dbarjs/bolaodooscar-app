@@ -40,6 +40,15 @@ export default {
 };
 </script>
 
+<style>
+.vote-page {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 100%;
+}
+</style>
+
 <style scoped>
 .page-enter-active {
   animation: acrossIn 1s ease-in;
