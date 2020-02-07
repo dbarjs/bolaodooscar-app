@@ -8,6 +8,7 @@
         <v-text-field
           class="mt-0"
           single-line
+          placeholder="Título da Aposta"
           ref="titleTextField"
           id="titleTextField"
           v-model="title"

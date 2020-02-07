@@ -481,7 +481,4 @@ export default {
     width: 156px;
   }
 }
-
-@media screen and (min-width: 1500px) {
-}
 </style>

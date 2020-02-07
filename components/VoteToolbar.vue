@@ -131,7 +131,7 @@ export default {
 .vote-toolbar-title 
   font-size: 1.0625rem
   line-height: 1.4
-  max-width: 160px
+  width: 160px
   white-space: nowrap
   text-overflow: ellipsis
   overflow-x: hidden
@@ -141,5 +141,15 @@ export default {
   font-size: 0.625em
   font-weight: 400
   line-height: 1.4
+
+@media screen and (min-width: 1000px)
+  .vote-toolbar-title 
+    font-size: 1.1875rem
+    line-height: 1.4
+    width: 300px
+
+  .vote-toolbar-status
+    font-size: 0.625em
+    line-height: 1.6
 
 </style>

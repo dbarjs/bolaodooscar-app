@@ -49,7 +49,9 @@ export default {
 }
 
 @media screen and (min-width: 1000px) {
-  .category-list-item {
+  .category-list-item-name.title {
+    font-size: 1.125rem !important;
+    margin: 0.25rem 0 1.3125rem 1.5rem;
   }
 }
 
