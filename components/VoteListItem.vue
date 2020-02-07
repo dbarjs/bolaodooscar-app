@@ -12,7 +12,12 @@
               <span v-else>Sem Título</span>
             </v-list-item-title>
             <v-list-item-subtitle>
-              {{ creationDate }}
+              <span v-if="winCount">
+                <span>{{ winCount }}</span>
+                <span v-if="winCount > 1"> acerto - </span>
+                <span v-else> acertos - </span>
+              </span>
+              <span>{{ creationDate }}</span>
             </v-list-item-subtitle>
           </v-list-item-content>
         </template>
@@ -87,6 +92,17 @@ export default {
     };
   },
   computed: {
+    winCount() {
+      return this.vote.choices
+        ? Object.values(this.vote.choices).filter(choice => {
+            return choice.category
+              ? choice.category.winner
+                ? choice.category.winner.id === choice.nomineeId
+                : false
+              : false;
+          }).length
+        : false;
+    },
     voteLink() {
       return this.vote ? "/vote/" + this.voteId : "/";
     },
