@@ -40,23 +40,24 @@
       >
         <v-card>
           <v-card-title class="headline">
-            Qual o nome do voto?
+            Renomear aposta
           </v-card-title>
-          <v-container>
+          <v-card-text class="py-0">
             <v-text-field
-              outlined
+              class="my-0 py-0"
+              single-line
               label="Título da Votação"
               ref="titleTextField"
               v-model="newTitle"
             ></v-text-field>
-          </v-container>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="closeTitleDialog">
+            <v-btn color="light-blue darken-1" text @click="closeTitleDialog">
               Cancelar
             </v-btn>
-            <v-btn color="green darken-1" text @click="saveTitle">
-              Salvar
+            <v-btn color="light-blue darken-1" text @click="saveTitle">
+              OK
             </v-btn>
           </v-card-actions>
         </v-card>

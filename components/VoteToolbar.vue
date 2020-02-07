@@ -8,11 +8,20 @@
     <v-btn icon @click="setCurrentVote">
       <v-icon>{{ icons.mdiArrowLeft }}</v-icon>
     </v-btn>
-    <v-toolbar-title>
-      <span v-if="numberOfVotes">
-        {{ numberOfVotes }} / {{ numberOfCategories }} votos
-      </span>
-      <span v-else>Indicados</span>
+    <v-toolbar-title class="pl-0 fill-height d-flex align-center">
+      <div
+        v-ripple
+        class="vote-toolbar-info v-list-item--link"
+        @click.stop="showUpdateVoteTitleDialog"
+      >
+        <div class="vote-toolbar-title">
+          <span v-if="voteTitle">{{ voteTitle }}</span>
+          <span v-else>Aposta sem Título</span>
+        </div>
+        <span class="vote-toolbar-status" v-if="numberOfVotes">
+          {{ numberOfVotes }} / {{ numberOfCategories }} votos (salvo)
+        </span>
+      </div>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn icon @click.stop="clearChoices">
@@ -23,12 +32,14 @@
     </v-btn>
     <clear-choices-dialog></clear-choices-dialog>
     <share-dialog></share-dialog>
+    <update-vote-title-dialog></update-vote-title-dialog>
   </v-app-bar>
 </template>
 
 <script>
 import ClearChoicesDialog from "~/components/ClearChoicesDialog.vue";
 import ShareDialog from "~/components/ShareDialog.vue";
+import UpdateVoteTitleDialog from "~/components/UpdateVoteTitleDialog.vue";
 import {
   votesRef,
   usersRef,
@@ -44,6 +55,9 @@ export default {
     };
   },
   computed: {
+    voteTitle() {
+      return this.$store.getters["vote/getCurrentVoteTitle"];
+    },
     user() {
       return this.$store.getters["user/getUser"];
     },
@@ -73,13 +87,59 @@ export default {
     },
     shareVote() {
       this.$store.dispatch("vote/shareVote");
+    },
+    showUpdateVoteTitleDialog() {
+      this.$store.commit("setUpdateVoteTitleDialog", true);
     }
   },
   components: {
     ClearChoicesDialog,
-    ShareDialog
+    ShareDialog,
+    UpdateVoteTitleDialog
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(this);
   }
 };
 </script>
 
-<style></style>
+<style lang="sass">
+.vote-toolbar-info
+  padding-left: 20px
+  padding-right: 20px
+  position: relative
+  display: flex
+  height: 100%
+  flex-flow: column
+  justify-content: center 
+  white-space: nowrap
+  text-overflow: ellipsis
+
+.vote-toolbar-info:hover::before 
+  opacity: 0.08
+
+.vote-toolbar-info::before
+  background-color: currentColor
+  bottom: 0
+  opacity: 0
+  pointer-events: none
+  position: absolute
+  right: 0
+  top: 0
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1)
+
+.vote-toolbar-title 
+  font-size: 1.0625rem
+  line-height: 1.4
+  max-width: 160px
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow-x: hidden
+
+.vote-toolbar-status
+  color: #bdbdbd
+  font-size: 0.625em
+  font-weight: 400
+  line-height: 1.4
+
+</style>

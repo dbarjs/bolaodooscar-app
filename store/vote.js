@@ -16,6 +16,8 @@ export const state = () => ({
 export const getters = {
   getCurrentVote: state => state.currentVote,
   getCurrentVoteId: state => (state.currentVote ? state.currentVote.id : false),
+  getCurrentVoteTitle: state =>
+    state.currentVote ? state.currentVote.title : false,
   getChoices: state => (state.currentVote ? state.currentVote.choices : {}),
   getCurrentVoteOwnerId: state => {
     if (state.currentVote) {
@@ -165,6 +167,17 @@ export const actions = {
       } catch (err) {
         // if not allowed, open the Share Dialog
         context.commit("setShareDialog", true, { root: true });
+      }
+    }
+  },
+  updateTitle(context, value) {
+    if (context.getters.getCurrentVoteId) {
+      try {
+        votesRef.doc(context.state.currentVote.id).update({
+          title: value
+        });
+      } catch (e) {
+        console.log(e);
       }
     }
   }
