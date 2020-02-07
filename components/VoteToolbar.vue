@@ -24,7 +24,7 @@
       </div>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn icon @click.stop="clearChoices">
+    <v-btn icon @click.stop="clearChoices" v-if="signedUserIsVoteOwner">
       <v-icon icon dark>{{ icons.mdiPlaylistRemove }}</v-icon>
     </v-btn>
     <v-btn icon @click="shareVote">
@@ -72,6 +72,11 @@ export default {
     },
     currentVoteId() {
       return this.$store.getters["vote/getCurrentVoteId"];
+    },
+    signedUserIsVoteOwner() {
+      const userId = this.$store.getters["user/getUserId"];
+      const ownerId = this.$store.getters["vote/getCurrentVoteOwnerId"];
+      return userId && ownerId ? userId === ownerId : false;
     }
   },
   methods: {

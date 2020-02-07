@@ -1,11 +1,11 @@
 <template>
   <v-list shaped nav dense v-if="user">
-    <v-list-item link>
+    <!-- <v-list-item link>
       <v-list-item-icon>
         <v-icon>{{ icons.mdiAccount }}</v-icon>
       </v-list-item-icon>
       <v-list-item-title>Conta</v-list-item-title>
-    </v-list-item>
+    </v-list-item> -->
     <v-list-item to="/votes" dark>
       <v-list-item-icon>
         <v-icon>{{ icons.mdiCheckboxMultipleMarked }}</v-icon>

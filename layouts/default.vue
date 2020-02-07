@@ -21,14 +21,14 @@
             <span>Início</span>
           </v-list-item-title>
         </v-list-item>
-        <v-list-item to="/about" dark>
+        <!-- <v-list-item to="/about" dark>
           <v-list-item-icon>
             <v-icon>{{ icons.mdiInformation }}</v-icon>
           </v-list-item-icon>
           <v-list-item-title>
             <span>Sobre</span>
           </v-list-item-title>
-        </v-list-item>
+        </v-list-item> -->
       </v-list>
       <v-divider v-if="user"></v-divider>
       <user-menu></user-menu>
