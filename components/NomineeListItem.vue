@@ -8,6 +8,17 @@
         <v-img class="nominee-list-item-image" v-bind:src="getNomineePoster" />
       </div>
       <div class="nominee-list-item-info" v-if="!actionEnabled && isSelected">
+        <div
+          v-if="hasWinner"
+          class="nominee-list-item-winner mb-2 font-weight-bold"
+        >
+          <v-chip v-if="isWinner" light color="#f5c518">
+            Vencedor
+          </v-chip>
+          <v-chip v-if="!isWinner" light outlined color="red darken-4">
+            Não venceu
+          </v-chip>
+        </div>
         <h4 class="nominee-list-item-name subtitle-2">
           <span>{{ nominee.name }}</span>
         </h4>
@@ -55,7 +66,10 @@
             </span>
           </div>
         </div>
-        <div class="d-flex" v-if="signedUserIsVoteOwner">
+        <div class="nominee-list-item-winner" v-if="hasWinner && !isWinner">
+          <span v-if="winner">Vencedor: {{ winner.name }}</span>
+        </div>
+        <div class="d-flex" v-if="signedUserIsVoteOwner && !hasWinner">
           <v-btn color="warning" outlined x-small @click="removeVote"
             >Desfazer Voto</v-btn
           >
@@ -104,6 +118,14 @@ export default {
     };
   },
   computed: {
+    isWinner() {
+      return this.nominee && this.winner
+        ? this.nominee.id === this.winner.id
+        : false;
+    },
+    hasWinner() {
+      return !!this.winner;
+    },
     isSelected() {
       return this.nominee ? this.selectedNominee === this.nominee.id : false;
     },
@@ -170,7 +192,13 @@ export default {
       this.$store.dispatch("vote/removeVote", this.categoryId);
     }
   },
-  props: ["id", "categoryId", "selectedNominee", "signedUserIsVoteOwner"],
+  props: [
+    "id",
+    "categoryId",
+    "selectedNominee",
+    "signedUserIsVoteOwner",
+    "winner"
+  ],
   watch: {
     id: {
       immediate: true,
@@ -317,7 +345,8 @@ export default {
 
 .nominee-list-item-name,
 .nominee-list-item-title,
-.nominee-list-item-original-title {
+.nominee-list-item-original-title,
+.nominee-list-item-winner {
   padding-right: 1rem;
 }
 
@@ -392,6 +421,10 @@ export default {
   line-height: 0.5em;
 }
 
+.nominee-list-item-winner {
+  font-size: 0.77em;
+}
+
 @media screen and (min-width: 800px) {
   .nominee-list-item {
     width: 122px;
@@ -461,6 +494,10 @@ export default {
   }
 
   .nominee-list-item-label-title.subtitle-2 span {
+    font-size: 0.87em;
+  }
+
+  .nominee-list-item-winner {
     font-size: 0.87em;
   }
 }

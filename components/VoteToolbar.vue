@@ -19,7 +19,7 @@
           <span v-else>Aposta sem Título</span>
         </div>
         <span class="vote-toolbar-status" v-if="numberOfVotes">
-          {{ numberOfVotes }} / {{ numberOfCategories }} votos (salvo)
+          <span>{{ numberOfVotes }} / {{ numberOfCategories }} votos</span>
         </span>
       </div>
     </v-toolbar-title>

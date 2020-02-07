@@ -37,6 +37,20 @@ export const getters = {
           ? state.currentVote.choices[categoryId].nomineeId
           : false
         : false;
+  },
+  getWinner(state) {
+    try {
+      return categoryId =>
+        state.currentVote && categoryId
+          ? state.currentVote.choices[categoryId]
+            ? state.currentVote.choices[categoryId].category
+              ? state.currentVote.choices[categoryId].category.winner
+              : false
+            : false
+          : false;
+    } catch (e) {
+      return false;
+    }
   }
 };
 

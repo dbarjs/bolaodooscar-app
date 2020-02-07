@@ -36,6 +36,29 @@
     <v-content>
       <nuxt />
     </v-content>
+    <v-footer
+      app
+      absolute
+      z-index="0"
+      class="text-center d-flex grey--text text--darken-1"
+      elevation="0"
+      inset
+      color="transparent"
+      style="z-index: 0"
+    >
+      <div>
+        Projeto desenvolvido por
+        <v-btn
+          text
+          color="grey light-1"
+          class="px-0 text-lowercase"
+          href="https://twitter.com/dbarjs"
+          target="_blank"
+        >
+          @dbarjs
+        </v-btn>
+      </div>
+    </v-footer>
   </v-app>
 </template>
 

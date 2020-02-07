@@ -11,20 +11,18 @@
       :categoryId="categoryId"
       :selectedNominee="selectedNominee"
       :signedUserIsVoteOwner="signedUserIsVoteOwner"
+      :winner="winner"
     ></nominee-list-item>
   </div>
 </template>
 
 <script>
-import { categoriesRef } from "~/firebase";
 import NomineeListItem from "~/components/NomineeListItem.vue";
 export default {
-  data() {
-    return {
-      nominees: []
-    };
-  },
   computed: {
+    winner() {
+      return this.$store.getters["vote/getWinner"](this.categoryId);
+    },
     selectedNominee() {
       return this.$store.getters["vote/getSelectedNominee"](this.categoryId);
     },
@@ -37,20 +35,9 @@ export default {
   props: {
     categoryId: {
       required: true
-    }
-  },
-  watch: {
-    categoryId: {
-      immediate: true,
-      handler() {
-        this.$bind(
-          "nominees",
-          categoriesRef
-            .doc(this.categoryId)
-            .collection("nominees")
-            .orderBy("name", "asc")
-        );
-      }
+    },
+    nominees: {
+      required: true
     }
   },
   components: {
