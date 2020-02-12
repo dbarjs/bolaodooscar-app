@@ -13,9 +13,9 @@
             </v-list-item-title>
             <v-list-item-subtitle>
               <span v-if="winCount">
-                <span>{{ winCount }}</span>
-                <span v-if="winCount > 1"> acerto - </span>
-                <span v-else> acertos - </span>
+                <span>
+                  {{ winCount }} {{ winCount > 1 ? "acertos" : "acerto" }} -
+                </span>
               </span>
               <span>{{ creationDate }}</span>
             </v-list-item-subtitle>
