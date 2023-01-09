@@ -21,7 +21,7 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "auto-parse": "^1.8.0",
     "firebase-tools": "^7.12.1",
-    "luxon": "^1.22.0",
+    "luxon": "^1.28.1",
     "nuxt": "^2.0.0",
     "vuefire": "^2.2.1",
     "vuexfire": "^3.2.1"
